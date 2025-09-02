@@ -431,10 +431,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// 관리자 기능
-function toggleAdminForm() {
-    const adminForm = document.getElementById('adminForm');
-    adminForm.classList.toggle('show');
+// 관리자 폼 표시/숨김 함수
+function toggleAdminFormVisibility() {
+    const adminFormContainer = document.getElementById('adminFormContainer');
+    if (adminFormContainer.style.display === 'none') {
+        adminFormContainer.style.display = 'flex'; // flex로 변경하여 중앙 정렬이 되도록 함
+    } else {
+        adminFormContainer.style.display = 'none';
+    }
 }
 
 // 새 프로젝트 추가
@@ -473,31 +477,32 @@ function addProject() {
     document.getElementById('projectCode').value = '';
     document.getElementById('projectIcon').value = '';
     
-    toggleAdminForm();
+    toggleAdminFormVisibility(); // 폼 닫기
     
     alert('프로젝트가 성공적으로 추가되었습니다!');
 }
 
 // 관리자 토글 이벤트
 document.addEventListener('DOMContentLoaded', () => {
-    const adminToggle = document.getElementById('adminToggle');
-    const adminForm = document.getElementById('adminForm'); // adminForm 요소를 가져옵니다.
+    const adminNavLink = document.getElementById('adminNavLink'); // 새로운 관리자 네비게이션 링크를 가져옵니다.
+    const adminFormContainer = document.getElementById('adminFormContainer'); // adminFormContainer 요소를 가져옵니다.
     let isAuthenticatedAdmin = false; // 관리자 인증 상태
     const SECRET_ADMIN_PASSWORD = 'admin123'; // 여기에 실제 비밀번호를 설정하세요
 
-    adminToggle.onclick = () => {
+    adminNavLink.addEventListener('click', (e) => {
+        e.preventDefault(); // 기본 링크 이동 동작 방지
         if (!isAuthenticatedAdmin) {
             const password = prompt('관리자 패널에 접근하려면 비밀번호를 입력하세요:');
             if (password === SECRET_ADMIN_PASSWORD) {
                 isAuthenticatedAdmin = true;
-                adminForm.classList.toggle('show'); // 비밀번호가 맞으면 관리자 폼을 토글
+                adminFormContainer.style.display = 'flex'; // 비밀번호가 맞으면 관리자 폼을 토글
             } else {
                 alert('잘못된 비밀번호입니다.');
             }
         } else {
-            adminForm.classList.toggle('show'); // 이미 인증된 경우 바로 토글
+            adminFormContainer.style.display = 'none'; // 이미 인증된 경우 바로 토글
         }
-    };
+    });
     
     // 프로젝트 데이터 로드
     loadProjects();

@@ -21,6 +21,7 @@
                 <a href="#experience" class="nav-link">경력</a>
                 <a href="#projects" class="nav-link">프로젝트</a>
                 <a href="#contact" class="nav-link">연락처</a>
+                <a href="#" class="nav-link admin-link" id="adminNavLink"><i class="fas fa-cog"></i> 관리자</a>
             </div>
             <div class="hamburger" id="hamburger">
                 <span class="bar"></span>
@@ -215,12 +216,10 @@
         </div>
     </div>
 
-    <!-- 관리자 패널 -->
-    <div class="admin-panel">
-        <button class="admin-toggle" id="adminToggle">
-            <i class="fas fa-cog"></i>
-            관리자
-        </button>
+    <script src="script.js"></script>
+
+    <!-- 관리자 폼 -->
+    <div class="admin-form-container" id="adminFormContainer" style="display: none;">
         <div class="admin-form" id="adminForm">
             <h3 style="color: var(--text-primary); margin-bottom: 1rem;">새 프로젝트 추가</h3>
             <input type="text" id="projectTitle" placeholder="프로젝트 제목" required>
@@ -230,10 +229,8 @@
             <input type="text" id="projectCode" placeholder="코드 링크">
             <input type="text" id="projectIcon" placeholder="아이콘 클래스 (예: fas fa-shopping-cart)">
             <button onclick="addProject()">프로젝트 추가</button>
-            <button class="secondary" onclick="toggleAdminForm()">취소</button>
+            <button class="secondary" onclick="document.getElementById('adminFormContainer').style.display = 'none';">취소</button>
         </div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
