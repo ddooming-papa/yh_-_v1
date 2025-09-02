@@ -481,7 +481,23 @@ function addProject() {
 // 관리자 토글 이벤트
 document.addEventListener('DOMContentLoaded', () => {
     const adminToggle = document.getElementById('adminToggle');
-    adminToggle.onclick = toggleAdminForm;
+    const adminForm = document.getElementById('adminForm'); // adminForm 요소를 가져옵니다.
+    let isAuthenticatedAdmin = false; // 관리자 인증 상태
+    const SECRET_ADMIN_PASSWORD = 'admin123'; // 여기에 실제 비밀번호를 설정하세요
+
+    adminToggle.onclick = () => {
+        if (!isAuthenticatedAdmin) {
+            const password = prompt('관리자 패널에 접근하려면 비밀번호를 입력하세요:');
+            if (password === SECRET_ADMIN_PASSWORD) {
+                isAuthenticatedAdmin = true;
+                adminForm.classList.toggle('show'); // 비밀번호가 맞으면 관리자 폼을 토글
+            } else {
+                alert('잘못된 비밀번호입니다.');
+            }
+        } else {
+            adminForm.classList.toggle('show'); // 이미 인증된 경우 바로 토글
+        }
+    };
     
     // 프로젝트 데이터 로드
     loadProjects();
