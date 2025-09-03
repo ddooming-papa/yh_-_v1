@@ -67,31 +67,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// 타이핑 효과
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    
-    type();
-}
-
-// 페이지 로드 시 타이핑 효과 적용
-window.addEventListener('load', () => {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const originalText = heroTitle.textContent;
-        typeWriter(heroTitle, originalText, 80);
-    }
-});
-
 // 스킬 아이템 호버 효과
 document.querySelectorAll('.skill-item').forEach(item => {
     item.addEventListener('mouseenter', function() {
