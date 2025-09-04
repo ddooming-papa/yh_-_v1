@@ -196,8 +196,8 @@ const optimizedScrollHandler = debounce(() => {
 
 window.addEventListener('scroll', optimizedScrollHandler);
 
-// 프로젝트 데이터 관리
-let projects = [
+// 프로젝트 데이터 관리 (기존 코드)
+let projects = JSON.parse(localStorage.getItem('portfolioProjects')) || [
     {
         id: 1,
         title: "이커머스 플랫폼",
@@ -227,12 +227,9 @@ let projects = [
     }
 ];
 
-// 로컬 스토리지에서 프로젝트 데이터 로드
+// 로컬 스토리지에서 프로젝트 데이터 로드 (수정: 초기화 시 로드하도록 변경)
 function loadProjects() {
-    const savedProjects = localStorage.getItem('portfolioProjects');
-    if (savedProjects) {
-        projects = JSON.parse(savedProjects);
-    }
+    // projects 변수가 이미 초기화 시 로드되므로 추가 로직 불필요
     renderProjects();
 }
 
@@ -244,6 +241,8 @@ function saveProjects() {
 // 프로젝트 카드 렌더링
 function renderProjects() {
     const projectsGrid = document.getElementById('projectsGrid');
+    if (!projectsGrid) return; // 요소가 없으면 함수 종료
+
     projectsGrid.innerHTML = '';
     
     projects.forEach(project => {
@@ -270,6 +269,9 @@ function renderProjects() {
         
         projectsGrid.appendChild(projectCard);
     });
+
+    // 관리자 패널의 프로젝트 목록도 업데이트
+    renderAdminProjectList();
 }
 
 // 모달 열기
@@ -327,8 +329,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // 관리자 폼 표시/숨김 함수
 function toggleAdminFormVisibility() {
     const adminFormContainer = document.getElementById('adminFormContainer');
-    if (adminFormContainer.style.display === 'none') {
+    if (adminFormContainer.style.display === 'none' || adminFormContainer.style.display === '') {
         adminFormContainer.style.display = 'flex'; // flex로 변경하여 중앙 정렬이 되도록 함
+        // 관리자 패널 열릴 때 첫 번째 탭 (프로젝트) 활성화
+        openAdminTab(null, 'projectAdmin'); 
     } else {
         adminFormContainer.style.display = 'none';
     }
@@ -388,15 +392,46 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = prompt('관리자 패널에 접근하려면 비밀번호를 입력하세요:');
             if (password === SECRET_ADMIN_PASSWORD) {
                 isAuthenticatedAdmin = true;
-                adminFormContainer.style.display = 'flex'; // 비밀번호가 맞으면 관리자 폼을 토글
+                toggleAdminFormVisibility(); // 비밀번호가 맞으면 관리자 폼을 토글
             } else {
                 alert('잘못된 비밀번호입니다.');
             }
         } else {
-            adminFormContainer.style.display = 'none'; // 이미 인증된 경우 바로 토글
+            toggleAdminFormVisibility(); // 이미 인증된 경우 바로 토글
         }
     });
     
-    // 프로젝트 데이터 로드
+    // 초기 프로젝트 데이터 로드 및 렌더링
     loadProjects();
+    loadAboutContent(); // 소개 내용 로드
+    loadExperienceData(); // 경력 데이터 로드
+    loadContactInfo(); // 연락처 정보 로드
 });
+
+// ======== 새로운 관리자 기능 JavaScript 시작 ========
+
+// 관리자 탭 전환 함수
+function openAdminTab(evt, tabName) {
+    let i, tabcontent, tabbuttons;
+
+    tabcontent = document.getElementsByClassName('admin-tab-content');
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = 'none';
+    }
+
+    tabbuttons = document.getElementsByClassName('admin-tab-button');
+    for (i = 0; i < tabbuttons.length; i++) {
+        tabbuttons[i].className = tabbuttons[i].className.replace(' active', '');
+    }
+
+    document.getElementById(tabName).style.display = 'block';
+    if (evt) { // 클릭 이벤트로 호출된 경우에만 active 클래스 추가
+        evt.currentTarget.className += ' active';
+    } else { // 초기 로드 시 호출된 경우 (예: toggleAdminFormVisibility에서)
+        // 해당 탭 버튼을 찾아 active 클래스 추가
+        const defaultTabButton = document.querySelector(`.admin-tab-button[onclick*='${tabName}']`);
+        if (defaultTabButton) {
+            defaultTabButton.className += ' active';
+        }
+    }
+}

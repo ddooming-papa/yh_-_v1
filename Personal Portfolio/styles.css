@@ -1319,3 +1319,83 @@ html {
         transform: translateY(0) scale(1);
     }
 }
+
+/* 관리자 탭 스타일 */
+.admin-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.admin-tab-button {
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px 10px 0 0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin: 0 5px;
+    font-size: 1rem;
+    flex-grow: 1;
+    max-width: 150px;
+    text-align: center;
+}
+
+.admin-tab-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.admin-tab-button.active {
+    background: var(--primary-gradient);
+    color: white;
+    border-color: var(--primary-gradient);
+    box-shadow: 0 5px 20px rgba(30, 60, 114, 0.4);
+    transform: translateY(-2px);
+}
+
+.admin-tab-content {
+    display: none;
+    padding: 1.5rem 0;
+}
+
+.admin-tab-content h4 {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+
+.admin-tab-content button {
+    width: auto;
+    margin-top: 1rem;
+    margin-right: 1rem;
+}
+
+.admin-tab-content textarea {
+    min-height: 80px;
+}
+
+@media (max-width: 768px) {
+    .admin-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-tab-button {
+        width: 100%;
+        max-width: 200px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+
+    .admin-tab-button.active {
+        border-radius: 10px;
+    }
+}

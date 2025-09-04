@@ -221,15 +221,59 @@
     <!-- 관리자 폼 -->
     <div class="admin-form-container" id="adminFormContainer" style="display: none;">
         <div class="admin-form" id="adminForm">
-            <h3 style="color: var(--text-primary); margin-bottom: 1rem;">새 프로젝트 추가</h3>
-            <input type="text" id="projectTitle" placeholder="프로젝트 제목" required>
-            <textarea id="projectDescription" placeholder="프로젝트 설명" rows="3" required></textarea>
-            <input type="text" id="projectTech" placeholder="기술 스택 (쉼표로 구분)" required>
-            <input type="text" id="projectDemo" placeholder="데모 링크">
-            <input type="text" id="projectCode" placeholder="코드 링크">
-            <input type="text" id="projectIcon" placeholder="아이콘 클래스 (예: fas fa-shopping-cart)">
-            <button onclick="addProject()">프로젝트 추가</button>
-            <button class="secondary" onclick="document.getElementById('adminFormContainer').style.display = 'none';">취소</button>
+            <h3 style="color: var(--text-primary); margin-bottom: 1rem;">관리자 패널</h3>
+            <div class="admin-tabs">
+                <button class="admin-tab-button active" onclick="openAdminTab(event, 'projectAdmin')">프로젝트</button>
+                <button class="admin-tab-button" onclick="openAdminTab(event, 'aboutAdmin')">소개</button>
+                <button class="admin-tab-button" onclick="openAdminTab(event, 'experienceAdmin')">경력</button>
+                <button class="admin-tab-button" onclick="openAdminTab(event, 'contactAdmin')">연락처</button>
+            </div>
+
+            <div id="projectAdmin" class="admin-tab-content" style="display: block;">
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">새 프로젝트 추가/관리</h4>
+                <input type="text" id="projectTitle" placeholder="프로젝트 제목" required>
+                <textarea id="projectDescription" placeholder="프로젝트 설명" rows="3" required></textarea>
+                <input type="text" id="projectTech" placeholder="기술 스택 (쉼표로 구분)" required>
+                <input type="text" id="projectDemo" placeholder="데모 링크">
+                <input type="text" id="projectCode" placeholder="코드 링크">
+                <input type="text" id="projectIcon" placeholder="아이콘 클래스 (예: fas fa-shopping-cart)">
+                <button onclick="addProject()">프로젝트 추가</button>
+                <div id="projectList" style="margin-top: 20px;">
+                    <!-- Existing projects will be listed here for editing/deletion -->
+                </div>
+            </div>
+
+            <div id="aboutAdmin" class="admin-tab-content">
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">소개 섹션 편집</h4>
+                <textarea id="aboutText1" placeholder="첫 번째 소개 문단" rows="3"></textarea>
+                <textarea id="aboutText2" placeholder="두 번째 소개 문단" rows="3"></textarea>
+                <button onclick="saveAboutContent()">소개 내용 저장</button>
+            </div>
+
+            <div id="experienceAdmin" class="admin-tab-content">
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">경력 섹션 관리</h4>
+                <input type="text" id="expTitle" placeholder="직책" required>
+                <input type="text" id="expCompany" placeholder="회사명" required>
+                <input type="text" id="expDate" placeholder="기간 (예: 2022 - 현재)" required>
+                <textarea id="expDescription" placeholder="세부 설명" rows="2"></textarea>
+                <button onclick="addExperience()">경력 추가</button>
+                <div id="experienceList" style="margin-top: 20px;">
+                    <!-- Existing experience items will be listed here for editing/deletion -->
+                </div>
+            </div>
+
+            <div id="contactAdmin" class="admin-tab-content">
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">연락처 섹션 편집</h4>
+                <input type="text" id="contactEmail" placeholder="이메일 주소">
+                <input type="text" id="contactPhone" placeholder="전화번호">
+                <input type="text" id="contactLocation" placeholder="위치">
+                <input type="text" id="contactGithub" placeholder="GitHub 링크">
+                <input type="text" id="contactLinkedin" placeholder="LinkedIn 링크">
+                <input type="text" id="contactTwitter" placeholder="Twitter 링크">
+                <button onclick="saveContactContent()">연락처 저장</button>
+            </div>
+
+            <button class="secondary" onclick="document.getElementById('adminFormContainer').style.display = 'none';">닫기</button>
         </div>
     </div>
 </body>
