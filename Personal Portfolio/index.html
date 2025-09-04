@@ -46,6 +46,7 @@
             <div class="hero-image">
                 <div class="profile-card">
                     <div class="profile-image">
+                        <img id="profileImageDisplay" src="" alt="프로필 이미지" style="display: none; width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
                         <i class="fas fa-user" id="profileIcon"></i>
                     </div>
                 </div>
@@ -236,7 +237,13 @@
                 <input type="text" id="adminHeroTitle" placeholder="프로필 제목" required>
                 <textarea id="adminHeroDescription" placeholder="프로필 설명" rows="3" required></textarea>
                 <input type="text" id="adminProfileIcon" placeholder="아이콘 클래스 (예: fas fa-user)">
+                <input type="text" id="adminProfileImageUrl" placeholder="프로필 이미지 URL (아이콘 대신 사용)">
+                <div id="profileImagePreviewContainer" style="margin-top: 1rem; text-align: center; display: none;">
+                    <img id="profileImagePreview" src="" alt="프로필 이미지 미리보기" style="max-width: 150px; max-height: 150px; border-radius: 50%; object-fit: cover; border: 2px solid var(--glass-border);">
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">이미지 URL이 있을 경우 여기에 미리보기가 표시됩니다.</p>
+                </div>
                 <button onclick="saveProfileContent()">프로필 내용 저장</button>
+                <button onclick="clearProfileImage()" class="secondary" style="margin-top: 1rem;">이미지 삭제</button>
             </div>
 
             <div id="projectAdmin" class="admin-tab-content">

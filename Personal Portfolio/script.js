@@ -791,13 +791,15 @@ function deleteProject(id) {
 let profileContent = JSON.parse(localStorage.getItem('portfolioProfile')) || {
     title: "YH’s Experience Lab",
     description: "하이브리드 인프라·클라우드 전문가, 조영현입니다.<br>온프레미스(HCI/VMware)부터 AWS·Azure·M365까지,<br>다양한 영역을 안정적으로 운영해온 경험을 갖추고 있습니다.",
-    icon: "fas fa-user"
+    icon: "fas fa-user",
+    imageUrl: "" // New field for image URL
 };
 
 function saveProfileContent() {
     profileContent.title = document.getElementById('adminHeroTitle').value;
     profileContent.description = document.getElementById('adminHeroDescription').value;
     profileContent.icon = document.getElementById('adminProfileIcon').value;
+    profileContent.imageUrl = document.getElementById('adminProfileImageUrl').value; // Save image URL
     localStorage.setItem('portfolioProfile', JSON.stringify(profileContent));
     renderProfileContent();
     alert('프로필 내용이 저장되었습니다!');
@@ -814,17 +816,74 @@ function loadProfileContent() {
 function renderProfileContent() {
     const heroTitleElement = document.getElementById('heroTitle');
     const heroDescriptionElement = document.getElementById('heroDescription');
+    
+    // Main page elements for profile image/icon
     const profileIconElement = document.getElementById('profileIcon');
+    const profileImageDisplayElement = document.getElementById('profileImageDisplay'); // New element
 
+    // Admin panel input fields
     const adminHeroTitleInput = document.getElementById('adminHeroTitle');
     const adminHeroDescriptionInput = document.getElementById('adminHeroDescription');
     const adminProfileIconInput = document.getElementById('adminProfileIcon');
+    const adminProfileImageUrlInput = document.getElementById('adminProfileImageUrl'); // New element
+    const profileImagePreview = document.getElementById('profileImagePreview'); // New element
+    const profileImagePreviewContainer = document.getElementById('profileImagePreviewContainer'); // New element
 
+    // Update main page text content
     if (heroTitleElement) heroTitleElement.textContent = profileContent.title;
-    if (heroDescriptionElement) heroDescriptionElement.innerHTML = profileContent.description; // innerHTML 사용
-    if (profileIconElement) profileIconElement.className = profileContent.icon;
+    if (heroDescriptionElement) heroDescriptionElement.innerHTML = profileContent.description;
 
+    // Handle profile image/icon display on main page
+    if (profileContent.imageUrl && profileImageDisplayElement && profileIconElement) {
+        profileImageDisplayElement.src = profileContent.imageUrl;
+        profileImageDisplayElement.style.display = 'block';
+        profileIconElement.style.display = 'none';
+    } else if (profileIconElement && profileImageDisplayElement) {
+        profileIconElement.className = profileContent.icon;
+        profileIconElement.style.display = 'block';
+        profileImageDisplayElement.style.display = 'none';
+    }
+
+    // Update admin panel input fields
     if (adminHeroTitleInput) adminHeroTitleInput.value = profileContent.title;
     if (adminHeroDescriptionInput) adminHeroDescriptionInput.value = profileContent.description;
     if (adminProfileIconInput) adminProfileIconInput.value = profileContent.icon;
+    if (adminProfileImageUrlInput) adminProfileImageUrlInput.value = profileContent.imageUrl;
+
+    // Handle image preview in admin panel
+    if (profileImagePreview && profileImagePreviewContainer && adminProfileImageUrlInput) {
+        if (profileContent.imageUrl) {
+            profileImagePreview.src = profileContent.imageUrl;
+            profileImagePreviewContainer.style.display = 'block';
+        } else {
+            profileImagePreview.src = '';
+            profileImagePreviewContainer.style.display = 'none';
+        }
+    }
 }
+
+function clearProfileImage() {
+    profileContent.imageUrl = '';
+    saveProfileContent();
+    renderProfileContent();
+    alert('프로필 이미지가 삭제되었습니다!');
+}
+
+// Event listener for adminProfileImageUrl input to update preview
+document.addEventListener('DOMContentLoaded', () => {
+    const adminProfileImageUrlInput = document.getElementById('adminProfileImageUrl');
+    const profileImagePreview = document.getElementById('profileImagePreview');
+    const profileImagePreviewContainer = document.getElementById('profileImagePreviewContainer');
+
+    if (adminProfileImageUrlInput && profileImagePreview && profileImagePreviewContainer) {
+        adminProfileImageUrlInput.addEventListener('input', () => {
+            if (adminProfileImageUrlInput.value) {
+                profileImagePreview.src = adminProfileImageUrlInput.value;
+                profileImagePreviewContainer.style.display = 'block';
+            } else {
+                profileImagePreview.src = '';
+                profileImagePreviewContainer.style.display = 'none';
+            }
+        });
+    }
+});

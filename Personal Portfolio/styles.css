@@ -1228,6 +1228,9 @@ html {
     border-radius: var(--border-radius); /* 추가 */
     backdrop-filter: blur(20px); /* 추가 */
     -webkit-backdrop-filter: blur(20px); /* 추가 */
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 80vh;
 }
 
 .admin-form input,
