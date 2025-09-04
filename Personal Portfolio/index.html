@@ -17,6 +17,7 @@
             </div>
             <div class="nav-menu" id="nav-menu">
                 <a href="#home" class="nav-link">홈</a>
+                <a href="#hero" class="nav-link">프로필</a>
                 <a href="#about" class="nav-link">소개</a>
                 <a href="#experience" class="nav-link">경력</a>
                 <a href="#projects" class="nav-link">프로젝트</a>
@@ -32,11 +33,11 @@
     </nav>
 
     <!-- 메인 섹션 -->
-    <section id="home" class="hero">
+    <section id="hero" class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">YH’s Experience Lab</h1>
-                <p class="hero-description">하이브리드 인프라·클라우드 전문가, 조영현입니다.<br>온프레미스(HCI/VMware)부터 AWS·Azure·M365까지,<br>다양한 영역을 안정적으로 운영해온 경험을 갖추고 있습니다.</p>
+                <h1 class="hero-title" id="heroTitle">YH’s Experience Lab</h1>
+                <p class="hero-description" id="heroDescription">하이브리드 인프라·클라우드 전문가, 조영현입니다.<br>온프레미스(HCI/VMware)부터 AWS·Azure·M365까지,<br>다양한 영역을 안정적으로 운영해온 경험을 갖추고 있습니다.</p>
                 <div class="hero-buttons">
                     <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
                     <a href="#contact" class="btn btn-secondary">연락하기</a>
@@ -45,7 +46,7 @@
             <div class="hero-image">
                 <div class="profile-card">
                     <div class="profile-image">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-user" id="profileIcon"></i>
                     </div>
                 </div>
             </div>
@@ -223,13 +224,22 @@
         <div class="admin-form" id="adminForm">
             <h3 style="color: var(--text-primary); margin-bottom: 1rem;">관리자 패널</h3>
             <div class="admin-tabs">
-                <button class="admin-tab-button active" onclick="openAdminTab(event, 'projectAdmin')">프로젝트</button>
+                <button class="admin-tab-button active" onclick="openAdminTab(event, 'profileAdmin')">프로필</button>
+                <button class="admin-tab-button" onclick="openAdminTab(event, 'projectAdmin')">프로젝트</button>
                 <button class="admin-tab-button" onclick="openAdminTab(event, 'aboutAdmin')">소개</button>
                 <button class="admin-tab-button" onclick="openAdminTab(event, 'experienceAdmin')">경력</button>
                 <button class="admin-tab-button" onclick="openAdminTab(event, 'contactAdmin')">연락처</button>
             </div>
 
-            <div id="projectAdmin" class="admin-tab-content" style="display: block;">
+            <div id="profileAdmin" class="admin-tab-content" style="display: block;">
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">프로필 섹션 편집</h4>
+                <input type="text" id="adminHeroTitle" placeholder="프로필 제목" required>
+                <textarea id="adminHeroDescription" placeholder="프로필 설명" rows="3" required></textarea>
+                <input type="text" id="adminProfileIcon" placeholder="아이콘 클래스 (예: fas fa-user)">
+                <button onclick="saveProfileContent()">프로필 내용 저장</button>
+            </div>
+
+            <div id="projectAdmin" class="admin-tab-content">
                 <h4 style="color: var(--text-primary); margin-bottom: 1rem;">새 프로젝트 추가/관리</h4>
                 <input type="text" id="projectTitle" placeholder="프로젝트 제목" required>
                 <textarea id="projectDescription" placeholder="프로젝트 설명" rows="3" required></textarea>

@@ -331,8 +331,7 @@ function toggleAdminFormVisibility() {
     const adminFormContainer = document.getElementById('adminFormContainer');
     if (adminFormContainer.style.display === 'none' || adminFormContainer.style.display === '') {
         adminFormContainer.style.display = 'flex'; // flex로 변경하여 중앙 정렬이 되도록 함
-        // 관리자 패널 열릴 때 첫 번째 탭 (프로젝트) 활성화
-        openAdminTab(null, 'projectAdmin'); 
+        openAdminTab(null, 'profileAdmin'); // 프로필 탭을 기본으로 활성화
     } else {
         adminFormContainer.style.display = 'none';
     }
@@ -406,6 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAboutContent(); // 소개 내용 로드
     loadExperienceData(); // 경력 데이터 로드
     loadContactInfo(); // 연락처 정보 로드
+    loadProfileContent(); // 프로필 내용 로드
 });
 
 // ======== 새로운 관리자 기능 JavaScript 시작 ========
@@ -785,4 +785,46 @@ function deleteProject(id) {
         renderProjects(); // 메인 페이지와 관리자 패널 프로젝트 목록 업데이트
         alert('프로젝트가 삭제되었습니다.');
     }
+}
+
+// 프로필 섹션 데이터
+let profileContent = JSON.parse(localStorage.getItem('portfolioProfile')) || {
+    title: "YH’s Experience Lab",
+    description: "하이브리드 인프라·클라우드 전문가, 조영현입니다.<br>온프레미스(HCI/VMware)부터 AWS·Azure·M365까지,<br>다양한 영역을 안정적으로 운영해온 경험을 갖추고 있습니다.",
+    icon: "fas fa-user"
+};
+
+function saveProfileContent() {
+    profileContent.title = document.getElementById('adminHeroTitle').value;
+    profileContent.description = document.getElementById('adminHeroDescription').value;
+    profileContent.icon = document.getElementById('adminProfileIcon').value;
+    localStorage.setItem('portfolioProfile', JSON.stringify(profileContent));
+    renderProfileContent();
+    alert('프로필 내용이 저장되었습니다!');
+}
+
+function loadProfileContent() {
+    const savedProfile = localStorage.getItem('portfolioProfile');
+    if (savedProfile) {
+        profileContent = JSON.parse(savedProfile);
+    }
+    renderProfileContent();
+}
+
+function renderProfileContent() {
+    const heroTitleElement = document.getElementById('heroTitle');
+    const heroDescriptionElement = document.getElementById('heroDescription');
+    const profileIconElement = document.getElementById('profileIcon');
+
+    const adminHeroTitleInput = document.getElementById('adminHeroTitle');
+    const adminHeroDescriptionInput = document.getElementById('adminHeroDescription');
+    const adminProfileIconInput = document.getElementById('adminProfileIcon');
+
+    if (heroTitleElement) heroTitleElement.textContent = profileContent.title;
+    if (heroDescriptionElement) heroDescriptionElement.innerHTML = profileContent.description; // innerHTML 사용
+    if (profileIconElement) profileIconElement.className = profileContent.icon;
+
+    if (adminHeroTitleInput) adminHeroTitleInput.value = profileContent.title;
+    if (adminHeroDescriptionInput) adminHeroDescriptionInput.value = profileContent.description;
+    if (adminProfileIconInput) adminProfileIconInput.value = profileContent.icon;
 }
