@@ -435,3 +435,354 @@ function openAdminTab(evt, tabName) {
         }
     }
 }
+
+// 소개 섹션 데이터
+let aboutContent = JSON.parse(localStorage.getItem('portfolioAbout')) || {
+    paragraph1: "저는 웹 개발에 열정을 가진 개발자입니다. 사용자 경험을 최우선으로 생각하며, 깔끔하고 효율적인 코드를 작성하는 것을 목표로 합니다.",
+    paragraph2: "최신 기술 트렌드를 따라가며 지속적으로 학습하고, 팀워크를 중시하는 개발자입니다."
+};
+
+function saveAboutContent() {
+    aboutContent.paragraph1 = document.getElementById('aboutText1').value;
+    aboutContent.paragraph2 = document.getElementById('aboutText2').value;
+    localStorage.setItem('portfolioAbout', JSON.stringify(aboutContent));
+    renderAboutContent();
+    alert('소개 내용이 저장되었습니다!');
+}
+
+function loadAboutContent() {
+    const savedAbout = localStorage.getItem('portfolioAbout');
+    if (savedAbout) {
+        aboutContent = JSON.parse(savedAbout);
+    }
+    renderAboutContent();
+}
+
+function renderAboutContent() {
+    const aboutText1Element = document.querySelector('#about .about-text p:first-of-type');
+    const aboutText2Element = document.querySelector('#about .about-text p:last-of-type');
+    const adminAboutText1 = document.getElementById('aboutText1');
+    const adminAboutText2 = document.getElementById('aboutText2');
+
+    if (aboutText1Element) aboutText1Element.textContent = aboutContent.paragraph1;
+    if (aboutText2Element) aboutText2Element.textContent = aboutContent.paragraph2;
+    if (adminAboutText1) adminAboutText1.value = aboutContent.paragraph1;
+    if (adminAboutText2) adminAboutText2.value = aboutContent.paragraph2;
+}
+
+// 경력 섹션 데이터
+let experienceData = JSON.parse(localStorage.getItem('portfolioExperience')) || [
+    {
+        id: 1,
+        title: "시니어 개발자",
+        company: "ABC 회사",
+        date: "2022 - 현재",
+        description: "웹 애플리케이션 개발 및 유지보수, 팀 리딩 및 멘토링"
+    },
+    {
+        id: 2,
+        title: "프론트엔드 개발자",
+        company: "XYZ 스타트업",
+        date: "2020 - 2022",
+        description: "React 기반 웹 애플리케이션 개발, UI/UX 개선"
+    },
+    {
+        id: 3,
+        title: "주니어 개발자",
+        company: "DEF 기업",
+        date: "2019 - 2020",
+        description: "웹사이트 개발 및 유지보수, 클라이언트 지원"
+    }
+];
+
+function saveExperienceData() {
+    localStorage.setItem('portfolioExperience', JSON.stringify(experienceData));
+    renderExperienceData();
+}
+
+function loadExperienceData() {
+    const savedExperience = localStorage.getItem('portfolioExperience');
+    if (savedExperience) {
+        experienceData = JSON.parse(savedExperience);
+    }
+    renderExperienceData();
+}
+
+function addExperience() {
+    const title = document.getElementById('expTitle').value;
+    const company = document.getElementById('expCompany').value;
+    const date = document.getElementById('expDate').value;
+    const description = document.getElementById('expDescription').value;
+
+    if (!title || !company || !date || !description) {
+        alert('모든 경력 필드를 입력해주세요.');
+        return;
+    }
+
+    const newExp = {
+        id: Date.now(),
+        title,
+        company,
+        date,
+        description
+    };
+    experienceData.push(newExp);
+    saveExperienceData();
+    
+    // 폼 초기화
+    document.getElementById('expTitle').value = '';
+    document.getElementById('expCompany').value = '';
+    document.getElementById('expDate').value = '';
+    document.getElementById('expDescription').value = '';
+
+    alert('경력이 추가되었습니다!');
+}
+
+function renderExperienceData() {
+    const timeline = document.querySelector('#experience .timeline');
+    if (!timeline) return;
+    timeline.innerHTML = ''; // 기존 내용 지우기
+
+    experienceData.sort((a, b) => new Date(b.date.split(' ')[0]) - new Date(a.date.split(' ')[0])); // 최신순 정렬
+
+    experienceData.forEach((exp, index) => {
+        const timelineItem = document.createElement('div');
+        timelineItem.className = `timeline-item ${index % 2 === 0 ? 'left' : 'right'}`; // 좌우 교차 배치
+        timelineItem.innerHTML = `
+            <div class="timeline-content">
+                <h3>${exp.title}</h3>
+                <h4>${exp.company}</h4>
+                <span class="date">${exp.date}</span>
+                <p>${exp.description}</p>
+            </div>
+        `;
+        timeline.appendChild(timelineItem);
+    });
+
+    // 관리자 패널의 경력 목록도 업데이트
+    renderAdminExperienceList();
+}
+
+// 관리자 패널 경력 목록 렌더링 (수정, 삭제 기능 포함)
+function renderAdminExperienceList() {
+    const experienceListDiv = document.getElementById('experienceList');
+    if (!experienceListDiv) return;
+    experienceListDiv.innerHTML = '<h5 style="color: var(--text-primary); margin-top: 1rem;">기존 경력 관리</h5>';
+
+    if (experienceData.length === 0) {
+        experienceListDiv.innerHTML += '<p style="color: var(--text-secondary);">아직 추가된 경력이 없습니다.</p>';
+        return;
+    }
+
+    experienceData.forEach(exp => {
+        const expItem = document.createElement('div');
+        expItem.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--glass-border);';
+        expItem.innerHTML = `
+            <span style="color: var(--text-primary);">${exp.title} (${exp.company})</span>
+            <div>
+                <button onclick="editExperience(${exp.id})" class="btn btn-small" style="margin-right: 5px;">수정</button>
+                <button onclick="deleteExperience(${exp.id})" class="btn btn-small secondary">삭제</button>
+            </div>
+        `;
+        experienceListDiv.appendChild(expItem);
+    });
+}
+
+// 경력 수정 기능 (관리자 패널)
+function editExperience(id) {
+    const expToEdit = experienceData.find(exp => exp.id === id);
+    if (!expToEdit) return;
+
+    document.getElementById('expTitle').value = expToEdit.title;
+    document.getElementById('expCompany').value = expToEdit.company;
+    document.getElementById('expDate').value = expToEdit.date;
+    document.getElementById('expDescription').value = expToEdit.description;
+
+    const addBtn = document.querySelector('#experienceAdmin button[onclick="addExperience()"]');
+    if (addBtn) {
+        addBtn.textContent = '경력 업데이트';
+        addBtn.onclick = () => updateExperience(id);
+    }
+}
+
+// 경력 업데이트 기능 (관리자 패널)
+function updateExperience(id) {
+    const expIndex = experienceData.findIndex(exp => exp.id === id);
+    if (expIndex === -1) return;
+
+    experienceData[expIndex].title = document.getElementById('expTitle').value;
+    experienceData[expIndex].company = document.getElementById('expCompany').value;
+    experienceData[expIndex].date = document.getElementById('expDate').value;
+    experienceData[expIndex].description = document.getElementById('expDescription').value;
+
+    saveExperienceData();
+    renderExperienceData(); // 메인 페이지와 관리자 패널 경력 목록 업데이트
+
+    document.getElementById('expTitle').value = '';
+    document.getElementById('expCompany').value = '';
+    document.getElementById('expDate').value = '';
+    document.getElementById('expDescription').value = '';
+
+    const addBtn = document.querySelector('#experienceAdmin button[onclick^="updateExperience("]');
+    if (addBtn) {
+        addBtn.textContent = '경력 추가';
+        addBtn.onclick = addExperience;
+    }
+    alert('경력이 업데이트되었습니다!');
+}
+
+// 경력 삭제 기능 (관리자 패널)
+function deleteExperience(id) {
+    if (confirm('정말로 이 경력을 삭제하시겠습니까?')) {
+        experienceData = experienceData.filter(exp => exp.id !== id);
+        saveExperienceData();
+        renderExperienceData(); // 메인 페이지와 관리자 패널 경력 목록 업데이트
+        alert('경력이 삭제되었습니다.');
+    }
+}
+
+// 연락처 섹션 데이터
+let contactInfo = JSON.parse(localStorage.getItem('portfolioContact')) || {
+    email: "your.email@example.com",
+    phone: "+82 10-1234-5678",
+    location: "서울, 대한민국",
+    github: "https://github.com/ddooming-papa",
+    linkedin: "https://linkedin.com/in/yourprofile",
+    twitter: "https://twitter.com/yourprofile"
+};
+
+function saveContactContent() {
+    contactInfo.email = document.getElementById('contactEmail').value;
+    contactInfo.phone = document.getElementById('contactPhone').value;
+    contactInfo.location = document.getElementById('contactLocation').value;
+    contactInfo.github = document.getElementById('contactGithub').value;
+    contactInfo.linkedin = document.getElementById('contactLinkedin').value;
+    contactInfo.twitter = document.getElementById('contactTwitter').value;
+    localStorage.setItem('portfolioContact', JSON.stringify(contactInfo));
+    renderContactInfo();
+    alert('연락처 정보가 저장되었습니다!');
+}
+
+function loadContactInfo() {
+    const savedContact = localStorage.getItem('portfolioContact');
+    if (savedContact) {
+        contactInfo = JSON.parse(savedContact);
+    }
+    renderContactInfo();
+}
+
+function renderContactInfo() {
+    const contactEmailElement = document.querySelector('#contact .contact-info p:nth-of-type(1)');
+    const contactPhoneElement = document.querySelector('#contact .contact-info p:nth-of-type(2)');
+    const contactLocationElement = document.querySelector('#contact .contact-info p:nth-of-type(3)');
+    const contactGithubLink = document.querySelector('#contact .social-links a[href*="github.com"]');
+    const contactLinkedinLink = document.querySelector('#contact .social-links a[href*="linkedin.com"]');
+    const contactTwitterLink = document.querySelector('#contact .social-links a[href*="twitter.com"]');
+
+    const adminContactEmail = document.getElementById('contactEmail');
+    const adminContactPhone = document.getElementById('contactPhone');
+    const adminContactLocation = document.getElementById('contactLocation');
+    const adminContactGithub = document.getElementById('contactGithub');
+    const adminContactLinkedin = document.getElementById('contactLinkedin');
+    const adminContactTwitter = document.getElementById('contactTwitter');
+
+    if (contactEmailElement) contactEmailElement.textContent = contactInfo.email;
+    if (contactPhoneElement) contactPhoneElement.textContent = contactInfo.phone;
+    if (contactLocationElement) contactLocationElement.textContent = contactInfo.location;
+    if (contactGithubLink) contactGithubLink.href = contactInfo.github;
+    if (contactLinkedinLink) contactLinkedinLink.href = contactInfo.linkedin;
+    if (contactTwitterLink) contactTwitterLink.href = contactInfo.twitter;
+
+    if (adminContactEmail) adminContactEmail.value = contactInfo.email;
+    if (adminContactPhone) adminContactPhone.value = contactInfo.phone;
+    if (adminContactLocation) adminContactLocation.value = contactInfo.location;
+    if (adminContactGithub) adminContactGithub.value = contactInfo.github;
+    if (adminContactLinkedin) adminContactLinkedin.value = contactInfo.linkedin;
+    if (adminContactTwitter) adminContactTwitter.value = contactInfo.twitter;
+}
+
+// 프로젝트 관리 기능 (관리자 패널)
+// renderAdminProjectList 함수 (이전에 renderProjects에서 호출했으나, 정의가 없었음)
+function renderAdminProjectList() {
+    const projectListDiv = document.getElementById('projectList');
+    if (!projectListDiv) return;
+    projectListDiv.innerHTML = '<h4 style="color: var(--text-primary); margin-top: 1rem;">기존 프로젝트 관리</h4>';
+
+    if (projects.length === 0) {
+        projectListDiv.innerHTML += '<p style="color: var(--text-secondary);">아직 추가된 프로젝트가 없습니다.</p>';
+        return;
+    }
+
+    projects.forEach(project => {
+        const projectItem = document.createElement('div');
+        projectItem.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--glass-border);';
+        projectItem.innerHTML = `
+            <span style="color: var(--text-primary);">${project.title}</span>
+            <div>
+                <button onclick="editProject(${project.id})" class="btn btn-small" style="margin-right: 5px;">수정</button>
+                <button onclick="deleteProject(${project.id})" class="btn btn-small secondary">삭제</button>
+            </div>
+        `;
+        projectListDiv.appendChild(projectItem);
+    });
+}
+
+// 프로젝트 수정 기능 (관리자 패널)
+function editProject(id) {
+    const projectToEdit = projects.find(project => project.id === id);
+    if (!projectToEdit) return;
+
+    document.getElementById('projectTitle').value = projectToEdit.title;
+    document.getElementById('projectDescription').value = projectToEdit.description;
+    document.getElementById('projectTech').value = projectToEdit.tech.join(', ');
+    document.getElementById('projectDemo').value = projectToEdit.demo === '#' ? '' : projectToEdit.demo;
+    document.getElementById('projectCode').value = projectToEdit.code === '#' ? '' : projectToEdit.code;
+    document.getElementById('projectIcon').value = projectToEdit.icon === 'fas fa-project-diagram' ? '' : projectToEdit.icon;
+
+    const addBtn = document.querySelector('#projectAdmin button[onclick="addProject()"]');
+    if (addBtn) {
+        addBtn.textContent = '프로젝트 업데이트';
+        addBtn.onclick = () => updateProject(id);
+    }
+}
+
+// 프로젝트 업데이트 기능 (관리자 패널)
+function updateProject(id) {
+    const projectIndex = projects.findIndex(project => project.id === id);
+    if (projectIndex === -1) return;
+
+    projects[projectIndex].title = document.getElementById('projectTitle').value;
+    projects[projectIndex].description = document.getElementById('projectDescription').value;
+    projects[projectIndex].tech = document.getElementById('projectTech').value.split(',').map(t => t.trim());
+    projects[projectIndex].demo = document.getElementById('projectDemo').value || '#';
+    projects[projectIndex].code = document.getElementById('projectCode').value || '#';
+    projects[projectIndex].icon = document.getElementById('projectIcon').value || 'fas fa-project-diagram';
+
+    saveProjects();
+    renderProjects(); // 메인 페이지와 관리자 패널 프로젝트 목록 업데이트
+
+    // 폼 초기화
+    document.getElementById('projectTitle').value = '';
+    document.getElementById('projectDescription').value = '';
+    document.getElementById('projectTech').value = '';
+    document.getElementById('projectDemo').value = '';
+    document.getElementById('projectCode').value = '';
+    document.getElementById('projectIcon').value = '';
+
+    const addBtn = document.querySelector('#projectAdmin button[onclick^="updateProject("]');
+    if (addBtn) {
+        addBtn.textContent = '프로젝트 추가';
+        addBtn.onclick = addProject;
+    }
+    alert('프로젝트가 업데이트되었습니다!');
+}
+
+// 프로젝트 삭제 기능 (관리자 패널)
+function deleteProject(id) {
+    if (confirm('정말로 이 프로젝트를 삭제하시겠습니까?')) {
+        projects = projects.filter(project => project.id !== id);
+        saveProjects();
+        renderProjects(); // 메인 페이지와 관리자 패널 프로젝트 목록 업데이트
+        alert('프로젝트가 삭제되었습니다.');
+    }
+}
