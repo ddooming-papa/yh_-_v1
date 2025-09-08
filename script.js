@@ -792,7 +792,7 @@ let profileContent = JSON.parse(localStorage.getItem('portfolioProfile')) || {
     title: "YH’s Experience Lab",
     description: "하이브리드 인프라·클라우드 전문가, 조영현입니다.<br>온프레미스(HCI/VMware)부터 AWS·Azure·M365까지,<br>다양한 영역을 안정적으로 운영해온 경험을 갖추고 있습니다.",
     icon: "fas fa-user",
-    imageUrl: "" // New field for image URL
+    imageUrl: "https://ifh.cc/g/xrpMQ3.jpg" // New field for image URL
 };
 
 function saveProfileContent() {
