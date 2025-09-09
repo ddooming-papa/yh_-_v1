@@ -810,19 +810,33 @@ function loadContactInfo() {
 }
 
 function renderContactInfo() {
-    document.getElementById('contactEmailDisplay').textContent = contactInfo.email;
-    document.getElementById('contactPhoneDisplay').textContent = contactInfo.phone;
-    document.getElementById('contactLocationDisplay').textContent = contactInfo.location;
-    document.getElementById('contactGithubLink').href = contactInfo.github;
-    document.getElementById('contactLinkedinLink').href = contactInfo.linkedin;
-    document.getElementById('contactTwitterLink').href = contactInfo.twitter;
+    const contactEmailElement = document.querySelector('#contact .contact-info p:nth-of-type(1)');
+    const contactPhoneElement = document.querySelector('#contact .contact-info p:nth-of-type(2)');
+    const contactLocationElement = document.querySelector('#contact .contact-info p:nth-of-type(3)');
+    const contactGithubLink = document.querySelector('#contact .social-links a[href*="github.com"]');
+    const contactLinkedinLink = document.querySelector('#contact .social-links a[href*="linkedin.com"]');
+    const contactTwitterLink = document.querySelector('#contact .social-links a[href*="twitter.com"]');
 
-    document.getElementById('contactEmail').value = contactInfo.email;
-    document.getElementById('contactPhone').value = contactInfo.phone;
-    document.getElementById('contactLocation').value = contactInfo.location;
-    document.getElementById('contactGithub').value = contactInfo.github;
-    document.getElementById('contactLinkedin').value = contactInfo.linkedin;
-    document.getElementById('contactTwitter').value = contactInfo.twitter;
+    const adminContactEmail = document.getElementById('contactEmail');
+    const adminContactPhone = document.getElementById('contactPhone');
+    const adminContactLocation = document.getElementById('contactLocation');
+    const adminContactGithub = document.getElementById('contactGithub');
+    const adminContactLinkedin = document.getElementById('contactLinkedin');
+    const adminContactTwitter = document.getElementById('contactTwitter');
+
+    if (contactEmailElement) contactEmailElement.textContent = contactInfo.email;
+    if (contactPhoneElement) contactPhoneElement.textContent = contactInfo.phone;
+    if (contactLocationElement) contactLocationElement.textContent = contactInfo.location;
+    if (contactGithubLink) contactGithubLink.href = contactInfo.github;
+    if (contactLinkedinLink) contactLinkedinLink.href = contactInfo.linkedin;
+    if (contactTwitterLink) contactTwitterLink.href = contactInfo.twitter;
+
+    if (adminContactEmail) adminContactEmail.value = contactInfo.email;
+    if (adminContactPhone) adminContactPhone.value = contactInfo.phone;
+    if (adminContactLocation) adminContactLocation.value = contactInfo.location;
+    if (adminContactGithub) adminContactGithub.value = contactInfo.github;
+    if (adminContactLinkedin) adminContactLinkedin.value = contactInfo.linkedin;
+    if (adminContactTwitter) adminContactTwitter.value = contactInfo.twitter;
 }
 
 // 프로젝트 관리 기능 (관리자 패널)
