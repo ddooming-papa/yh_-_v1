@@ -455,8 +455,10 @@ function openAdminTab(evt, tabName) {
 
 // 소개 섹션 데이터
 let aboutContent = JSON.parse(localStorage.getItem('portfolioAbout')) || {
-    paragraph1: "저는 웹 개발에 열정을 가진 개발자입니다. 사용자 경험을 최우선으로 생각하며, 깔끔하고 효율적인 코드를 작성하는 것을 목표로 합니다.",
-    paragraph2: "최신 기술 트렌드를 따라가며 지속적으로 학습하고, 팀워크를 중시하는 개발자입니다."
+    paragraph1: `"불가능이란 노력하지 않는 자들의 변명이다"
+꾸준한 노력이 곧 성장이라 믿습니다.
+클라우드와 온프레미스를 아우르는 경험을 기반으로 안정적이면서도 혁신적인 IT 인프라를 만들어 가겠습니다.`,
+    paragraph2: "네트워크(Juniper), 서버-ERP 관리, 보안 솔루션 운영, 그리고 HCI와 클라우드(AWS, Azure, M365)까지 이어지는 경험을 통해, 안정성과 확장성을 겸비한 하이브리드 인프라 역량을 갖추었습니다."
 };
 
 function saveAboutContent() {
