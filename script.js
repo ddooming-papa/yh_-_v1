@@ -614,24 +614,24 @@ function updateSkill(id, name, icon) {
 let experienceData = JSON.parse(localStorage.getItem('portfolioExperience')) || [
     {
         id: 1,
-        title: "시니어 개발자",
-        company: "ABC 회사",
-        date: "2022 - 현재",
-        description: "웹 애플리케이션 개발 및 유지보수, 팀 리딩 및 멘토링"
+        title: "프로",
+        company: "동화기업",
+        date: "2022.03.02 ~ 재직중",
+        description: "IT인프라(서버,cloud)"
     },
     {
         id: 2,
-        title: "프론트엔드 개발자",
-        company: "XYZ 스타트업",
-        date: "2020 - 2022",
-        description: "React 기반 웹 애플리케이션 개발, UI/UX 개선"
+        title: "대리",
+        company: "한국쌀마스타",
+        date: "2016.10.13 ~ 2022.02.28",
+        description: "IT인프라관리"
     },
     {
         id: 3,
-        title: "주니어 개발자",
-        company: "DEF 기업",
-        date: "2019 - 2020",
-        description: "웹사이트 개발 및 유지보수, 클라이언트 지원"
+        title: "AM",
+        company: "아이크래프트",
+        date: "2014.12.08 ~ 2016.03.31",
+        description: "KT 코넷망 네트워크 관리 및 운영 지원\nJuniper configuration 및 라우팅 작업 진행"
     }
 ];
 
@@ -783,12 +783,12 @@ function deleteExperience(id) {
 
 // 연락처 섹션 데이터
 let contactInfo = JSON.parse(localStorage.getItem('portfolioContact')) || {
-    email: "your.email@example.com",
-    phone: "+82 10-1234-5678",
-    location: "서울, 대한민국",
-    github: "https://github.com/ddooming-papa",
-    linkedin: "https://linkedin.com/in/yourprofile",
-    twitter: "https://twitter.com/yourprofile"
+    email: "joy8256@naver.com",
+    phone: "010-0000-0000",
+    location: "대한민국",
+    github: "https://www.saramin.co.kr",
+    linkedin: "https://rememberapp.co.kr/",
+    twitter: "https://www.jobkorea.co.kr/"
 };
 
 function saveContactContent() {
