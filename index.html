@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YH’s Experience Lab</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">YH’s Experience Lab</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">홈</a>
+                <a href="#hero" class="nav-link">프로필</a>
+                <a href="#about" class="nav-link">소개</a>
+                <a href="#experience" class="nav-link">경력</a>
+                <a href="#projects" class="nav-link">프로젝트</a>
+                <a href="#contact" class="nav-link">연락처</a>
+                <a href="#" class="nav-link admin-link" id="adminNavLink"><i class="fas fa-cog"></i> 관리자</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 메인 섹션 -->
+    <section id="hero" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title" id="heroTitle">YH’s Experience Lab</h1>
+                <p class="hero-description" id="heroDescription">하이브리드 인프라·클라우드 전문가, 조영현입니다.<br>온프레미스(HCI/VMware)부터 AWS·Azure·M365까지,<br>다양한 영역을 안정적으로 운영해온 경험을 갖추고 있습니다.</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
+                    <a href="#contact" class="btn btn-secondary">연락하기</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="profile-card">
+                    <div class="profile-image">
+                        <img id="profileImageDisplay" src="" alt="프로필 이미지" style="display: none; width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                        <i class="fas fa-user" id="profileIcon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 소개 섹션 -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">소개</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>안녕하세요!</h3>
+                    <p id="typed-intro"></p>
+                </div>
+                <div class="skills">
+                    <h3>기술 스택</h3>
+                    <div class="skills-grid" id="skillsGrid">
+                        <!-- 기술 스택이 동적으로 여기에 추가됩니다. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 경력 섹션 -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">경력</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>시니어 개발자</h3>
+                        <h4>ABC 회사</h4>
+                        <span class="date">2022 - 현재</span>
+                        <p>웹 애플리케이션 개발 및 유지보수, 팀 리딩 및 멘토링</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>프론트엔드 개발자</h3>
+                        <h4>XYZ 스타트업</h4>
+                        <span class="date">2020 - 2022</span>
+                        <p>React 기반 웹 애플리케이션 개발, UI/UX 개선</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>주니어 개발자</h3>
+                        <h4>DEF 기업</h4>
+                        <span class="date">2019 - 2020</span>
+                        <p>웹사이트 개발 및 유지보수, 클라이언트 지원</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 프로젝트 섹션 -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">프로젝트</h2>
+            <div class="projects-grid" id="projectsGrid">
+                <!-- 프로젝트 카드들이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 연락처 섹션 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">연락처</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>함께 일하고 싶으시다면</h3>
+                    <p>새로운 프로젝트나 협업 기회에 대해 언제든 연락주세요!</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <span id="contactEmailDisplay">your.email@example.com</span>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-phone"></i>
+                            <span id="contactPhoneDisplay">+82 10-1234-5678</span>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="contactLocationDisplay">서울, 대한민국</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" id="contactGithubLink" class="social-link"><i class="fas fa-user-tie"></i></a>
+                        <a href="#" id="contactLinkedinLink" class="social-link"><i class="fas fa-id-card"></i></a>
+                        <a href="#" id="contactTwitterLink" class="social-link"><i class="fas fa-briefcase"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="이름" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="이메일" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="제목" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="메시지" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">메시지 보내기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 YH’s Experience Lab. 모든 권리 보유.</p>
+        </div>
+    </footer>
+
+    <!-- 프로젝트 모달 -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">프로젝트 제목</h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image" id="modalImage">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <p class="modal-description" id="modalDescription">프로젝트 설명이 여기에 표시됩니다.</p>
+                <div class="modal-tech" id="modalTech">
+                    <!-- 기술 스택이 여기에 표시됩니다 -->
+                </div>
+                <div class="modal-links" id="modalLinks">
+                    <!-- 링크 버튼들이 여기에 표시됩니다 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="script.js"></script>
+
+    <!-- 관리자 폼 -->
+    <div class="admin-form-container" id="adminFormContainer" style="display: none;">
+        <div class="admin-form" id="adminForm">
+            <h3 style="color: var(--text-primary); margin-bottom: 1rem;">관리자 패널</h3>
+            <div class="admin-tabs">
+                <button class="admin-tab-button active" onclick="openAdminTab(event, 'profileAdmin')">프로필</button>
+                <button class="admin-tab-button" onclick="openAdminTab(event, 'projectAdmin')">프로젝트</button>
+                <button class="admin-tab-button" onclick="openAdminTab(event, 'aboutAdmin')">소개</button>
+                <button class="admin-tab-button" onclick="openAdminTab(event, 'experienceAdmin')">경력</button>
+                <button class="admin-tab-button" onclick="openAdminTab(event, 'contactAdmin')">연락처</button>
+            </div>
+
+            <div id="profileAdmin" class="admin-tab-content" style="display: block;">
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">프로필 섹션 편집</h4>
+                <input type="text" id="adminHeroTitle" placeholder="프로필 제목" required>
+                <textarea id="adminHeroDescription" placeholder="프로필 설명" rows="3" required></textarea>
+                <input type="text" id="adminProfileIcon" placeholder="아이콘 클래스 (예: fas fa-user)">
+                <input type="text" id="adminProfileImageUrl" placeholder="프로필 이미지 URL (아이콘 대신 사용)">
+                <div id="profileImagePreviewContainer" style="margin-top: 1rem; text-align: center; display: none;">
+                    <img id="profileImagePreview" src="" alt="프로필 이미지 미리보기" style="max-width: 150px; max-height: 150px; border-radius: 50%; object-fit: cover; border: 2px solid var(--glass-border);">
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">이미지 URL이 있을 경우 여기에 미리보기가 표시됩니다.</p>
+                </div>
+                <button onclick="saveProfileContent()">프로필 내용 저장</button>
+                <button onclick="clearProfileImage()" class="secondary" style="margin-top: 1rem;">이미지 삭제</button>
+            </div>
+
+            <div id="projectAdmin" class="admin-tab-content">
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">새 프로젝트 추가/관리</h4>
+                <input type="text" id="projectTitle" placeholder="프로젝트 제목" required>
+                <textarea id="projectDescription" placeholder="프로젝트 설명" rows="3" required></textarea>
+                <input type="text" id="projectTech" placeholder="기술 스택 (쉼표로 구분)" required>
+                <input type="text" id="projectDemo" placeholder="데모 링크">
+                <input type="text" id="projectCode" placeholder="코드 링크">
+                <input type="text" id="projectIcon" placeholder="아이콘 클래스 (예: fas fa-shopping-cart)">
+                <button onclick="addProject()">프로젝트 추가</button>
+                <div id="projectList" style="margin-top: 20px;">
+                    <!-- Existing projects will be listed here for editing/deletion -->
+                </div>
+            </div>
+
+            <div id="aboutAdmin" class="admin-tab-content">
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">소개 섹션 편집</h4>
+                <textarea id="aboutText1" placeholder="첫 번째 소개 문단" rows="3"></textarea>
+                <textarea id="aboutText2" placeholder="두 번째 소개 문단" rows="3"></textarea>
+                <button onclick="saveAboutContent()">소개 내용 저장</button>
+
+                <hr style="margin: 2rem 0;">
+
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">기술 스택 관리</h4>
+                <div id="adminSkillsList">
+                    <!-- 관리자 기술 스택 목록이 여기에 표시됩니다. -->
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 1rem;">
+                    <input type="text" id="newSkillName" placeholder="기술 이름 (예: HTML5)" style="flex-grow: 1;">
+                    <input type="text" id="newSkillIcon" placeholder="Font Awesome 아이콘 (예: fab fa-html5)" style="flex-grow: 1;">
+                    <button onclick="addSkill()">추가</button>
+                </div>
+            </div>
+
+            <div id="experienceAdmin" class="admin-tab-content">
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">경력 섹션 관리</h4>
+                <input type="text" id="expTitle" placeholder="직책" required>
+                <input type="text" id="expCompany" placeholder="회사명" required>
+                <input type="text" id="expDate" placeholder="기간 (예: 2022 - 현재)" required>
+                <textarea id="expDescription" placeholder="세부 설명" rows="2"></textarea>
+                <button onclick="addExperience()">경력 추가</button>
+                <div id="experienceList" style="margin-top: 20px;">
+                    <!-- Existing experience items will be listed here for editing/deletion -->
+                </div>
+            </div>
+
+            <div id="contactAdmin" class="admin-tab-content">
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">연락처 섹션 편집</h4>
+                <input type="text" id="contactEmail" placeholder="이메일 주소">
+                <input type="text" id="contactPhone" placeholder="전화번호">
+                <input type="text" id="contactLocation" placeholder="위치">
+                <input type="text" id="contactGithub" placeholder="사람인 링크">
+                <input type="text" id="contactLinkedin" placeholder="리멤버 링크">
+                <input type="text" id="contactTwitter" placeholder="잡코리아 링크">
+                <button onclick="saveContactContent()">연락처 저장</button>
+            </div>
+
+            <button class="secondary" onclick="document.getElementById('adminFormContainer').style.display = 'none';">닫기</button>
+        </div>
+    </div>
+
+    <!-- 비밀번호 입력 프롬프트 -->
+    <div id="adminPasswordPrompt" class="admin-form-container" style="display: none;">
+        <div class="password-prompt-box">
+            <h4>관리자 비밀번호 입력</h4>
+            <input type="password" id="adminPasswordInput" placeholder="비밀번호를 입력하세요">
+            <div class="prompt-buttons">
+                <button id="adminPasswordSubmit">확인</button>
+                <button id="adminPasswordCancel" class="secondary">취소</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
