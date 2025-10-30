@@ -21,6 +21,16 @@
     --blue-light: #e3f2fd;
     --blue-medium: #2196f3;
     --blue-dark: #1976d2;
+    --bg-light: #f8f9fa;
+    --primary-color: #3498db;
+    --blue-lightest: #eaf4ff; /* Keep this for skills background */
+    
+    /* New colors for the skills section */
+    --bg-warm-gray: #f7f5f2;
+    --border-warm-gray: #e8e6e3;
+    --text-dark-gray: #333333;
+    --text-medium-gray: #555555;
+    --bg-pastel-blue: #e3f2fd; /* New color for experience section background */
 }
 
 body {
@@ -411,15 +421,36 @@ section {
     opacity: 0.5;
 }
 
+#about .section-title {
+    text-align: center;
+}
+
+#about .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background-color: var(--blue-medium);
+    border-radius: 2px;
+}
+
 .about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
+    display: block;
+    max-width: 800px;
+    margin: 3rem auto 0;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(5px);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--glass-border);
 }
 
 .about-text h3 {
-    font-size: 1.8rem;
+    font-size: 2rem;
+    font-weight: 700;
     margin-bottom: 1rem;
     color: #2c3e50;
 }
@@ -437,72 +468,92 @@ section {
     color: #2c3e50;
 }
 
-.skills-grid {
+/* 기술 스택 섹션 */
+#skills {
+    background-color: var(--bg-warm-gray); /* Warm Gray background */
+    padding: 100px 0;
+}
+
+#skills .section-title,
+#skills .section-subtitle {
+    color: var(--text-dark-gray); /* Dark text */
+    text-align: center;
+}
+
+#skills .section-subtitle {
+    margin-bottom: 4rem;
+    font-size: 1.1rem;
+    color: var(--text-medium-gray); /* Lighter dark text */
+}
+
+#skills .skills-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
 }
 
 .skill-item {
+    background: #ffffff; /* White card background */
+    border: 1px solid var(--border-warm-gray); /* Add subtle border */
+    border-radius: 15px; /* Add border-radius back */
+    padding: 30px; /* Add padding back */
+    transition: all 0.3s ease; /* Add transition back */
+    text-align: left;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: var(--border-radius);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow-soft);
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-}
-
-.skill-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--accent-gradient);
-    opacity: 0;
-    transition: var(--transition);
-    z-index: -1;
+    gap: 15px;
 }
 
 .skill-item:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: var(--shadow-hover);
+    transform: translateY(-5px); /* Subtle lift effect */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.07); /* Subtle shadow */
+    border-color: var(--primary-color);
 }
 
-.skill-item:hover::before {
-    opacity: 0.1;
+.skill-icon-container {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
 }
 
-.skill-item i {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    background: var(--primary-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    transition: var(--transition);
+.skill-content h3 {
+    margin: 0 0 10px;
+    font-size: 1.3rem;
+    color: var(--text-dark-gray); /* Dark text */
 }
 
-.skill-item:hover i {
-    transform: scale(1.2) rotate(5deg);
-    filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
+.skill-content p {
+    margin: 0 0 15px;
+    color: var(--text-medium-gray); /* Lighter dark text */
+    font-size: 0.95rem;
+    line-height: 1.7;
+    word-break: keep-all; 
+    flex-grow: 1;
 }
 
-.skill-item span {
-    font-weight: 600;
-    color: var(--text-primary);
-    font-size: 1.1rem;
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto; /* Push tags to the bottom */
 }
+
+.skill-tags span {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: var(--primary-color);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
 
 /* 경력 섹션 */
+#experience {
+    padding: 100px 0;
+    background-color: var(--bg-pastel-blue); /* Match skills section bg if needed or keep it light */
+}
+
 .timeline {
     position: relative;
     max-width: 800px;
@@ -515,8 +566,8 @@ section {
     left: 50%;
     top: 0;
     bottom: 0;
-    width: 2px;
-    background: #3498db;
+    width: 3px;
+    background: #dceaf7; /* Lighter line color */
     transform: translateX(-50%);
 }
 
@@ -537,20 +588,18 @@ section {
 }
 
 .timeline-content {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: #ffffff;
     padding: 2.5rem;
     border-radius: var(--border-radius);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow-soft);
+    border: 1px solid #eaf4ff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 5px 10px rgba(0, 0, 0, 0.02);
     position: relative;
     transition: var(--transition);
 }
 
 .timeline-content:hover {
     transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0, 0, 0, 0.04);
 }
 
 .timeline-content::before {
@@ -559,39 +608,42 @@ section {
     top: 20px;
     width: 0;
     height: 0;
-    border: 10px solid transparent;
+    border: 12px solid transparent;
 }
 
 .timeline-item:nth-child(odd) .timeline-content::before {
-    right: -20px;
-    border-left-color: white;
+    right: -24px;
+    border-left-color: #ffffff;
 }
 
 .timeline-item:nth-child(even) .timeline-content::before {
-    left: -20px;
-    border-right-color: white;
+    left: -24px;
+    border-right-color: #ffffff;
 }
 
 .timeline-content h3 {
-    color: #2c3e50;
+    color: var(--text-dark-gray);
     margin-bottom: 0.5rem;
+    font-size: 1.4rem;
 }
 
 .timeline-content h4 {
-    color: #3498db;
+    color: var(--primary-color);
     margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
 .timeline-content .date {
-    color: #f39c12;
+    color: #E67E22; /* Warm orange color for date */
     font-weight: 500;
     margin-bottom: 1rem;
     display: block;
 }
 
 .timeline-content p {
-    color: #666;
-    line-height: 1.6;
+    color: var(--text-medium-gray);
+    line-height: 1.7;
 }
 
 /* 프로젝트 섹션 */
@@ -1286,7 +1338,7 @@ html {
     padding: 8px 16px;
     border-radius: 25px;
     transition: var(--transition);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 5px 15px rgba(44, 62, 80, 0.3);
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -1295,6 +1347,7 @@ html {
 .admin-link:hover {
     transform: translateY(-2px) scale(1.05);
     box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    background: var(--accent-gradient);
 }
 
 /* 반응형 조정 */

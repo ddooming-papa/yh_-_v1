@@ -63,12 +63,17 @@
                     <h3>안녕하세요!</h3>
                     <p id="typed-intro"></p>
                 </div>
-                <div class="skills">
-                    <h3>기술 스택</h3>
-                    <div class="skills-grid" id="skillsGrid">
-                        <!-- 기술 스택이 동적으로 여기에 추가됩니다. -->
-                    </div>
-                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 기술 스택 섹션 -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">기술 스택</h2>
+            <p class="section-subtitle">실제 운영 경험 기반의 인프라 · 클라우드 · 보안 역량</p>
+            <div class="skills-grid" id="skillsGrid">
+                <!-- 기술 스택이 동적으로 여기에 추가됩니다. -->
             </div>
         </div>
     </section>
@@ -205,6 +210,7 @@
                 <button class="admin-tab-button active" onclick="openAdminTab(event, 'profileAdmin')">프로필</button>
                 <button class="admin-tab-button" onclick="openAdminTab(event, 'projectAdmin')">프로젝트</button>
                 <button class="admin-tab-button" onclick="openAdminTab(event, 'aboutAdmin')">소개</button>
+                <button class="admin-tab-button" onclick="openAdminTab(event, 'skillsAdmin')">기술 스택</button>
                 <button class="admin-tab-button" onclick="openAdminTab(event, 'experienceAdmin')">경력</button>
                 <button class="admin-tab-button" onclick="openAdminTab(event, 'contactAdmin')">연락처</button>
             </div>
@@ -242,17 +248,26 @@
                 <textarea id="aboutText1" placeholder="첫 번째 소개 문단" rows="3"></textarea>
                 <textarea id="aboutText2" placeholder="두 번째 소개 문단" rows="3"></textarea>
                 <button onclick="saveAboutContent()">소개 내용 저장</button>
+            </div>
 
-                <hr style="margin: 2rem 0;">
-
+            <div id="skillsAdmin" class="admin-tab-content">
                 <h4 style="color: var(--text-primary); margin-bottom: 1rem;">기술 스택 관리</h4>
-                <div id="adminSkillsList">
-                    <!-- 관리자 기술 스택 목록이 여기에 표시됩니다. -->
+                <div style="margin-bottom: 20px;">
+                    <label for="newSkillName">기술 이름</label>
+                    <input type="text" id="newSkillName" placeholder="예: 인프라 · 가상화">
+
+                    <label for="newSkillDescription">설명</label>
+                    <textarea id="newSkillDescription" placeholder="예: VMware vSphere/HCI, Hyper-V..."></textarea>
+
+                    <label for="newSkillTags">태그 (쉼표로 구분)</label>
+                    <input type="text" id="newSkillTags" placeholder="예: HA 운영, 표준화">
+
+                    <label for="newSkillIcon">Font Awesome 아이콘</label>
+                    <input type="text" id="newSkillIcon" placeholder="예: fas fa-server">
+                    <button type="button" onclick="addSkill()" class="btn btn-primary" style="margin-top: 1rem;">기술 추가</button>
                 </div>
-                <div style="display: flex; gap: 10px; margin-top: 1rem;">
-                    <input type="text" id="newSkillName" placeholder="기술 이름 (예: HTML5)" style="flex-grow: 1;">
-                    <input type="text" id="newSkillIcon" placeholder="Font Awesome 아이콘 (예: fab fa-html5)" style="flex-grow: 1;">
-                    <button onclick="addSkill()">추가</button>
+                <div id="adminSkillsList" class="admin-item-list">
+                    <!-- 기존 스킬 목록이 여기에 동적으로 추가됩니다 -->
                 </div>
             </div>
 

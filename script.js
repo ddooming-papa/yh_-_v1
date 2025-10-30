@@ -544,12 +544,48 @@ let skillsData = [];
 function loadSkills() {
     const savedSkills = localStorage.getItem('portfolioSkills');
     skillsData = savedSkills ? JSON.parse(savedSkills) : [
-        { id: 1, name: "HTML5", icon: "fab fa-html5" },
-        { id: 2, name: "CSS3", icon: "fab fa-css3-alt" },
-        { id: 3, name: "JavaScript", icon: "fab fa-js" },
-        { id: 4, name: "React", icon: "fab fa-react" },
-        { id: 5, name: "Node.js", icon: "fab fa-node-js" },
-        { id: 6, name: "Git", icon: "fab fa-git-alt" }
+        {
+            id: 1,
+            title: "인프라 · 가상화",
+            description: "VMware vSphere/HCI, Hyper-V, AD/DNS/Exchange, Windows/Linux",
+            tags: ["HA 운영", "표준화"],
+            icon: "fas fa-server"
+        },
+        {
+            id: 2,
+            title: "클라우드",
+            description: "AWS(EC2/VPC/S3/ELB/RDS/CloudFront/DX/RI), Azure, M365",
+            tags: ["비용 최적화", "정적 호스팅"],
+            icon: "fas fa-cloud"
+        },
+        {
+            id: 3,
+            title: "보안 · 계정",
+            description: "DRM, MDM, 문서중앙화, EDR/백신, VPN/방화벽",
+            tags: ["감사 대응", "접근제어"],
+            icon: "fas fa-shield-alt"
+        },
+        {
+            id: 4,
+            title: "네트워크",
+            description: "Cisco, Juniper, Routing/Switching, L3 백본 대개체",
+            tags: ["전환 다운타임!"],
+            icon: "fas fa-network-wired"
+        },
+        {
+            id: 5,
+            title: "모니터링",
+            description: "Zabbix, Grafana, Polestar EMS",
+            tags: ["가시성", "장애 예방"],
+            icon: "fas fa-desktop"
+        },
+        {
+            id: 6,
+            title: "DR · 백업",
+            description: "Veeam, AWS MGN — On-Prem → Cloud DR PoC",
+            tags: ["복구절차", "훈련체계"],
+            icon: "fas fa-database"
+        }
     ];
     renderSkills();
     renderAdminSkillsList();
@@ -567,8 +603,16 @@ function renderSkills() {
         const skillItem = document.createElement('div');
         skillItem.className = 'skill-item';
         skillItem.innerHTML = `
-            <i class="${skill.icon}"></i>
-            <span>${skill.name}</span>
+            <div class="skill-icon-container">
+                <i class="${skill.icon}"></i>
+            </div>
+            <div class="skill-content">
+                <h3>${skill.title}</h3>
+                <p>${skill.description}</p>
+                <div class="skill-tags">
+                    ${skill.tags.map(tag => `<span>${tag}</span>`).join('')}
+                </div>
+            </div>
         `;
         skillsGrid.appendChild(skillItem);
     });
@@ -585,7 +629,7 @@ function renderAdminSkillsList() {
         skillItem.innerHTML = `
             <div>
                 <i class="${skill.icon}" style="margin-right: 10px;"></i>
-                <span>${skill.name}</span>
+                <span>${skill.title}</span>
             </div>
             <div>
                 <button onclick="editSkill(${skill.id})" class="btn btn-small" style="margin-right: 5px;">수정</button>
@@ -597,19 +641,26 @@ function renderAdminSkillsList() {
 }
 
 function addSkill() {
-    const nameInput = document.getElementById('newSkillName');
+    const titleInput = document.getElementById('newSkillName');
+    const descriptionInput = document.getElementById('newSkillDescription');
+    const tagsInput = document.getElementById('newSkillTags');
     const iconInput = document.getElementById('newSkillIcon');
-    const name = nameInput.value.trim();
+
+    const title = titleInput.value.trim();
+    const description = descriptionInput.value.trim();
+    const tags = tagsInput.value.trim();
     const icon = iconInput.value.trim();
 
-    if (!name || !icon) {
-        alert('기술 이름과 아이콘을 모두 입력해주세요.');
+    if (!title || !description || !tags || !icon) {
+        alert('모든 필드를 입력해주세요.');
         return;
     }
 
     const newSkill = {
         id: Date.now(),
-        name,
+        title,
+        description,
+        tags: tags.split(',').map(t => t.trim()),
         icon
     };
 
@@ -618,7 +669,9 @@ function addSkill() {
     renderSkills();
     renderAdminSkillsList();
 
-    nameInput.value = '';
+    titleInput.value = '';
+    descriptionInput.value = '';
+    tagsInput.value = '';
     iconInput.value = '';
 }
 
@@ -635,25 +688,37 @@ function editSkill(id) {
     const skillToEdit = skillsData.find(skill => skill.id === id);
     if (!skillToEdit) return;
 
-    const newName = prompt('새로운 기술 이름을 입력하세요:', skillToEdit.name);
-    if (newName === null) return; // 사용자가 취소한 경우
+    const newTitle = prompt('새로운 기술 이름을 입력하세요:', skillToEdit.title);
+    if (newTitle === null) return;
+
+    const newDescription = prompt('새로운 설명을 입력하세요:', skillToEdit.description);
+    if (newDescription === null) return;
+
+    const newTags = prompt('새로운 태그를 입력하세요 (쉼표로 구분):', skillToEdit.tags.join(', '));
+    if (newTags === null) return;
 
     const newIcon = prompt('새로운 Font Awesome 아이콘 클래스를 입력하세요:', skillToEdit.icon);
-    if (newIcon === null) return; // 사용자가 취소한 경우
+    if (newIcon === null) return;
 
-    updateSkill(id, newName.trim(), newIcon.trim());
+    updateSkill(id, newTitle.trim(), newDescription.trim(), newTags.trim(), newIcon.trim());
 }
 
-function updateSkill(id, name, icon) {
+function updateSkill(id, title, description, tags, icon) {
     const skillIndex = skillsData.findIndex(skill => skill.id === id);
     if (skillIndex === -1) return;
 
-    if (!name || !icon) {
-        alert('기술 이름과 아이콘은 비워둘 수 없습니다.');
+    if (!title || !description || !tags || !icon) {
+        alert('모든 필드는 비워둘 수 없습니다.');
         return;
     }
 
-    skillsData[skillIndex] = { ...skillsData[skillIndex], name, icon };
+    skillsData[skillIndex] = {
+        ...skillsData[skillIndex],
+        title,
+        description,
+        tags: tags.split(',').map(t => t.trim()),
+        icon
+    };
     saveSkills();
     renderSkills();
     renderAdminSkillsList();
