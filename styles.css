@@ -630,20 +630,121 @@ section {
 .timeline-content h4 {
     color: var(--primary-color);
     margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.2px;
 }
 
 .timeline-content .date {
-    color: #E67E22; /* Warm orange color for date */
-    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #b45309; /* deeper amber for emphasis */
+    font-weight: 800;
     margin-bottom: 1rem;
-    display: block;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.22);
+    font-size: 1.02rem;
 }
 
 .timeline-content p {
     color: var(--text-medium-gray);
     line-height: 1.7;
+}
+
+.timeline-content .exp-bullets {
+    margin-top: 0.75rem;
+    padding-left: 0;
+    color: var(--text-medium-gray);
+    line-height: 1.75;
+    list-style: none;
+}
+
+.timeline-content .exp-bullets > li {
+    margin: 0.35rem 0;
+    padding-left: 0.95rem;
+    position: relative;
+}
+
+.timeline-content .exp-bullets > li.exp-parent-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 4px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+.timeline-content .exp-bullets-nested {
+    list-style: none;
+    padding-left: 0.85rem;
+    margin: 0.25rem 0 0;
+}
+
+.timeline-content .exp-bullets-nested li {
+    margin: 0.25rem 0;
+    padding-left: 0.8rem;
+    font-size: 0.92em;
+    position: relative;
+}
+
+.timeline-content .exp-bullets-nested li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+}
+
+.timeline-content .exp-section {
+    margin-top: 0.9rem;
+}
+
+.timeline-content .exp-section:first-of-type {
+    margin-top: 0.75rem;
+}
+
+.timeline-content .exp-section-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(52, 152, 219, 0.12);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.45rem;
+    border: 1px solid rgba(52, 152, 219, 0.18);
+}
+
+.timeline-content .exp-desc {
+    margin-top: 0.75rem;
+}
+
+.timeline-content .exp-modal-trigger {
+    margin-top: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.55rem 0.9rem;
+    border-radius: 12px;
+    border: 1px solid rgba(52, 152, 219, 0.25);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.timeline-content .exp-modal-trigger:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(52, 152, 219, 0.12);
+    background: rgba(52, 152, 219, 0.08);
 }
 
 /* 프로젝트 섹션 */
@@ -1124,6 +1225,117 @@ html {
     box-shadow: var(--shadow-hover);
     position: relative;
     animation: slideIn 0.3s ease;
+}
+
+/* 경력 모달: 밝은 배경 + 진한 텍스트로 가독성 개선 */
+#experienceModal .modal-content {
+    background: #ffffff;
+    border: 1px solid #e0e7ef;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+#experienceModal .modal-header {
+    border-bottom-color: #e0e7ef;
+}
+
+#experienceModal .modal-title {
+    color: #1976d2;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+}
+
+#experienceModal .modal-description,
+#experienceModal #expModalDate {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #b45309;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.22);
+    font-size: 1.05rem;
+}
+
+#experienceModal #expModalBody {
+    color: var(--text-dark-gray);
+}
+
+#experienceModal #expModalBody .exp-section-title {
+    background: rgba(52, 152, 219, 0.12);
+    color: #1565c0;
+    border-color: rgba(52, 152, 219, 0.2);
+}
+
+#experienceModal #expModalBody .exp-section {
+    margin-bottom: 1.5rem;
+}
+
+#experienceModal #expModalBody .exp-section:last-child {
+    margin-bottom: 0;
+}
+
+#experienceModal #expModalBody .exp-bullets {
+    color: var(--text-medium-gray);
+    list-style: none;
+    padding-left: 0;
+    margin: 0.5rem 0 0;
+}
+
+#experienceModal #expModalBody .exp-bullets > li {
+    margin: 0.6rem 0;
+    padding-left: 1.05rem;
+    position: relative;
+}
+
+#experienceModal #expModalBody .exp-bullets > li.exp-parent-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 5px;
+    height: 5px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+#experienceModal #expModalBody .exp-bullets > li.exp-parent-item {
+    font-weight: 600;
+    color: var(--text-dark-gray);
+}
+
+#experienceModal #expModalBody .exp-bullets-nested {
+    list-style: none;
+    padding-left: 0.95rem;
+    margin: 0.4rem 0 0;
+}
+
+#experienceModal #expModalBody .exp-bullets-nested li {
+    margin: 0.35rem 0;
+    padding-left: 0.7rem;
+    position: relative;
+    font-size: 0.95em;
+    color: var(--text-medium-gray);
+}
+
+#experienceModal #expModalBody .exp-bullets-nested li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+#experienceModal .close {
+    color: #555;
+}
+
+#experienceModal .close:hover {
+    color: #1976d2;
 }
 
 .modal-header {

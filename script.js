@@ -541,6 +541,8 @@ function initializeTypingEffect() {
 // --- 기술 스택 관리 기능 ---
 let skillsData = [];
 
+const DEFAULT_SKILL_ICONS = ['fas fa-server', 'fas fa-cloud', 'fas fa-shield-alt', 'fas fa-network-wired', 'fas fa-desktop', 'fas fa-database'];
+
 function loadSkills() {
     const savedSkills = localStorage.getItem('portfolioSkills');
     skillsData = savedSkills ? JSON.parse(savedSkills) : [
@@ -587,6 +589,12 @@ function loadSkills() {
             icon: "fas fa-database"
         }
     ];
+    skillsData.forEach((skill, index) => {
+        if (!skill.icon || !skill.icon.trim()) {
+            skill.icon = DEFAULT_SKILL_ICONS[index % DEFAULT_SKILL_ICONS.length] || 'fas fa-server';
+        }
+    });
+    if (savedSkills) saveSkills();
     renderSkills();
     renderAdminSkillsList();
 }
@@ -600,17 +608,18 @@ function renderSkills() {
     if (!skillsGrid) return;
     skillsGrid.innerHTML = '';
     skillsData.forEach(skill => {
+        const iconClass = skill.icon && skill.icon.trim() ? skill.icon.trim() : 'fas fa-server';
         const skillItem = document.createElement('div');
         skillItem.className = 'skill-item';
         skillItem.innerHTML = `
             <div class="skill-icon-container">
-                <i class="${skill.icon}"></i>
+                <i class="${iconClass}"></i>
             </div>
             <div class="skill-content">
                 <h3>${skill.title}</h3>
                 <p>${skill.description}</p>
                 <div class="skill-tags">
-                    ${skill.tags.map(tag => `<span>${tag}</span>`).join('')}
+                    ${(skill.tags || []).map(tag => `<span>${tag}</span>`).join('')}
                 </div>
             </div>
         `;
@@ -623,12 +632,13 @@ function renderAdminSkillsList() {
     if (!adminSkillsList) return;
     adminSkillsList.innerHTML = '';
     skillsData.forEach(skill => {
+        const iconClass = skill.icon && skill.icon.trim() ? skill.icon.trim() : 'fas fa-server';
         const skillItem = document.createElement('div');
         skillItem.className = 'admin-skill-item';
         skillItem.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--glass-border);';
         skillItem.innerHTML = `
             <div>
-                <i class="${skill.icon}" style="margin-right: 10px;"></i>
+                <i class="${iconClass}" style="margin-right: 10px;"></i>
                 <span>${skill.title}</span>
             </div>
             <div>
@@ -707,17 +717,20 @@ function updateSkill(id, title, description, tags, icon) {
     const skillIndex = skillsData.findIndex(skill => skill.id === id);
     if (skillIndex === -1) return;
 
-    if (!title || !description || !tags || !icon) {
-        alert('모든 필드는 비워둘 수 없습니다.');
+    if (!title || !description || !tags) {
+        alert('제목, 설명, 태그는 비워둘 수 없습니다.');
         return;
     }
+
+    const existingIcon = skillsData[skillIndex].icon;
+    const iconToUse = (icon && icon.trim()) ? icon.trim() : (existingIcon || 'fas fa-server');
 
     skillsData[skillIndex] = {
         ...skillsData[skillIndex],
         title,
         description,
         tags: tags.split(',').map(t => t.trim()),
-        icon
+        icon: iconToUse
     };
     saveSkills();
     renderSkills();
@@ -748,6 +761,153 @@ let experienceData = JSON.parse(localStorage.getItem('portfolioExperience')) || 
         description: "KT 코넷망 네트워크 관리 및 운영 지원\nJuniper configuration 및 라우팅 작업 진행"
     }
 ];
+
+function formatExperienceDescription(description, options = {}) {
+    const raw = (description ?? '').toString().trim();
+    if (!raw) return { summaryHtml: '', fullHtml: '', hasOverflow: false };
+
+    const normalized = raw.replace(/\r\n/g, '\n');
+
+    // 1) Tokenize lines first.
+    // 2) Only treat "·" as a separator when used like "A · B" (with spaces).
+    //    If it's used as a leading bullet marker ("· item") or inside a word, keep it as-is.
+    const splitByMiddleDotSeparator = (line) => {
+        const trimmed = (line ?? '').toString();
+        // Leading bullet marker: keep as-is, later we'll strip it.
+        if (/^\s*·\s+/.test(trimmed)) return [trimmed];
+        // Split only on " · " (spaces around) to avoid breaking content.
+        return trimmed.split(/\s+·\s+/g);
+    };
+
+    const rawLines = normalized
+        .split('\n')
+        .flatMap(splitByMiddleDotSeparator)
+        .map(s => s.trim())
+        .filter(Boolean);
+
+    // Section headers like: [담당 업무], [핵심 수행 업무], [주요 성과]
+    const sections = [];
+    let current = { title: '', items: [] };
+
+    const flush = () => {
+        if (current.title || current.items.length) sections.push(current);
+        current = { title: '', items: [] };
+    };
+
+    for (const line of rawLines) {
+        const headerMatch = line.match(/^\[([^\]]+)\]$/);
+        if (headerMatch) {
+            flush();
+            current.title = headerMatch[1].trim();
+            continue;
+        }
+
+        // Strip common leading bullet markers.
+        let cleaned = line.replace(/^[-•·\u2022]\s+/, '').trim();
+        if (!cleaned) continue;
+
+        // Detect sub-item: starts with ": " (colon + space) = child of previous item
+        const isSubItem = cleaned.startsWith(': ');
+        if (isSubItem) cleaned = cleaned.slice(2).trim();
+
+        // If the previous item ends with a comma, treat this line as a continuation
+        // (common when users wrap sentences across lines in textarea).
+        const last = current.items.length ? current.items[current.items.length - 1] : null;
+        if (!isSubItem && last && typeof last === 'object' && typeof last.text === 'string' && last.text.trim().endsWith(',')) {
+            last.text = `${last.text.trim()} ${cleaned}`.trim();
+            continue;
+        }
+
+        current.items.push({ text: cleaned, isSubItem });
+    }
+    flush();
+
+    const hasSectionHeaders = sections.some(s => s.title);
+    const allItems = sections.flatMap(s => s.items.map(i => i.text || i));
+
+    // Build hierarchical groups: parent + children (": " 접두사 = 하위 항목)
+    const buildGroups = (items) => {
+        const groups = [];
+        let lastParent = null;
+        for (const it of items) {
+            const text = typeof it === 'object' ? it.text : it;
+            const isSub = typeof it === 'object' && it.isSubItem;
+            if (isSub && lastParent) {
+                lastParent.children.push(text);
+            } else {
+                lastParent = { text, children: [] };
+                groups.push(lastParent);
+            }
+        }
+        return groups;
+    };
+
+    const renderList = (items) => {
+        const groups = buildGroups(items);
+        return groups.map(g => {
+            const childrenHtml = g.children.length
+                ? `<ul class="exp-bullets-nested">${g.children.map(c => `<li>${c}</li>`).join('')}</ul>`
+                : '';
+            return `<li class="exp-parent-item">${g.text}${childrenHtml}</li>`;
+        }).join('');
+    };
+
+    const renderSections = (secList) => secList
+        .filter(s => s.title || s.items.length)
+        .map(s => {
+            const titleHtml = s.title ? `<div class="exp-section-title">${s.title}</div>` : '';
+            const listHtml = s.items.length
+                ? `<ul class="exp-bullets">${renderList(s.items)}</ul>`
+                : '';
+            return `<div class="exp-section">${titleHtml}${listHtml}</div>`;
+        })
+        .join('');
+
+    // No sections -> behave like before, but still produce summary/full.
+    if (!hasSectionHeaders) {
+        const fullHtml = allItems.length <= 1
+            ? `<p>${raw}</p>`
+            : `<ul class="exp-bullets">${allItems.map(p => `<li>${p}</li>`).join('')}</ul>`;
+
+        // Summary: first 5 items at most.
+        const summaryItems = allItems.slice(0, 5);
+        const summaryHtml = (summaryItems.length <= 1)
+            ? `<p>${summaryItems[0] ?? raw}</p>`
+            : `<ul class="exp-bullets">${summaryItems.map(p => `<li>${p}</li>`).join('')}</ul>`;
+
+        return { summaryHtml, fullHtml, hasOverflow: allItems.length > summaryItems.length };
+    }
+
+    const normalizeTitle = (t) => (t ?? '').toString().replace(/\s+/g, '').trim();
+    const whitelist = Array.isArray(options.summarySectionWhitelist)
+        ? options.summarySectionWhitelist.map(normalizeTitle).filter(Boolean)
+        : null;
+    const summaryBaseSections = whitelist
+        ? sections.filter(s => whitelist.includes(normalizeTitle(s.title)))
+        : sections;
+
+    // Build summary per section: 업무/핵심=3개, 성과=2개, 그 외=2개
+    const summarySections = summaryBaseSections.map(s => {
+        const t = normalizeTitle(s.title);
+        const isCore = t.includes('핵심');
+
+        // 카드 요약에서는 '핵심 수행 업무'를 "큰 목차(상위 항목)"만 보여주도록 처리
+        // (ex: 가상화 및 IDC 인프라 운영 / 클라우드 및 협업 서비스 운영 ...)
+        if (isCore) {
+            const topLevel = buildGroups(s.items).map(g => ({ text: g.text, isSubItem: false }));
+            return { title: s.title, items: topLevel, _fullLen: s.items.length };
+        }
+
+        const limit = t.includes('담당') ? 3 : (t.includes('성과') ? 2 : 2);
+        return { title: s.title, items: s.items.slice(0, limit), _fullLen: s.items.length };
+    });
+
+    const hasOverflow = summarySections.some(s => (s._fullLen ?? 0) > (s.items?.length ?? 0));
+    const summaryHtml = renderSections(summarySections);
+    const fullHtml = renderSections(sections);
+
+    return { summaryHtml, fullHtml, hasOverflow };
+}
 
 function saveExperienceData() {
     localStorage.setItem('portfolioExperience', JSON.stringify(experienceData));
@@ -802,12 +962,18 @@ function renderExperienceData() {
     experienceData.forEach((exp, index) => {
         const timelineItem = document.createElement('div');
         timelineItem.className = `timeline-item ${index % 2 === 0 ? 'left' : 'right'}`; // 좌우 교차 배치
+        const { summaryHtml } = formatExperienceDescription(exp.description, {
+            summarySectionWhitelist: ['담당 업무', '핵심 수행 업무']
+        });
         timelineItem.innerHTML = `
-            <div class="timeline-content">
+            <div class="timeline-content" data-exp-id="${exp.id}">
                 <h3>${exp.title}</h3>
                 <h4>${exp.company}</h4>
                 <span class="date">${exp.date}</span>
-                <p>${exp.description}</p>
+                <div class="exp-desc exp-desc--summary">
+                    ${summaryHtml}
+                </div>
+                <button type="button" class="exp-modal-trigger">자세히 보기</button>
             </div>
         `;
         timeline.appendChild(timelineItem);
@@ -816,6 +982,52 @@ function renderExperienceData() {
     // 관리자 패널의 경력 목록도 업데이트
     renderAdminExperienceList();
 }
+
+function openExperienceModal(exp) {
+    const modal = document.getElementById('experienceModal');
+    const titleEl = document.getElementById('expModalTitle');
+    const dateEl = document.getElementById('expModalDate');
+    const bodyEl = document.getElementById('expModalBody');
+    if (!modal || !titleEl || !dateEl || !bodyEl) return;
+
+    const { fullHtml } = formatExperienceDescription(exp.description);
+    titleEl.textContent = `${exp.title} · ${exp.company}`;
+    dateEl.textContent = exp.date;
+    bodyEl.innerHTML = fullHtml;
+
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeExperienceModal() {
+    const modal = document.getElementById('experienceModal');
+    if (!modal) return;
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+}
+
+document.addEventListener('click', (e) => {
+    const trigger = e.target && e.target.closest ? e.target.closest('.exp-modal-trigger') : null;
+    if (trigger) {
+        const content = trigger.closest('.timeline-content');
+        if (!content) return;
+        const id = Number(content.getAttribute('data-exp-id'));
+        const exp = experienceData.find(x => x.id === id);
+        if (exp) openExperienceModal(exp);
+        return;
+    }
+
+    const closeBtn = e.target && e.target.closest ? e.target.closest('#closeExpModal') : null;
+    if (closeBtn) {
+        closeExperienceModal();
+        return;
+    }
+
+    const modal = document.getElementById('experienceModal');
+    if (modal && e.target === modal) {
+        closeExperienceModal();
+    }
+});
 
 // 관리자 패널 경력 목록 렌더링 (수정, 삭제 기능 포함)
 function renderAdminExperienceList() {
