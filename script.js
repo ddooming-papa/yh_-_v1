@@ -182,26 +182,36 @@ function formatExperienceDescription(description) {
         
         if (titleMatch) {
             const title = titleMatch[1];
-            const contentLines = lines.slice(1);
+            const contentLines = lines.slice(1).filter(l => l.trim());
             
-            let sectionHtml = `<div class="exp-section">
+            // fullHtml: 전체 항목 모두 표시
+            let fullSectionHtml = `<div class="exp-section">
                 <span class="exp-section-title">${title}</span>
                 <ul class="exp-bullets">`;
-            
             contentLines.forEach(line => {
-                if (line.trim().startsWith('-')) {
-                    sectionHtml += `<li>${line.trim().substring(1).trim()}</li>`;
-                } else if (line.trim()) {
-                    sectionHtml += `<li>${line.trim()}</li>`;
-                }
+                const text = line.trim().startsWith('-') ? line.trim().substring(1).trim() : line.trim();
+                if (text) fullSectionHtml += `<li>${text}</li>`;
             });
-            
-            sectionHtml += `</ul></div>`;
+            fullSectionHtml += `</ul></div>`;
+            fullHtml += fullSectionHtml;
 
-            if (title === '담당 업무' || title === '핵심 수행 업무') {
-                summaryHtml += sectionHtml;
+            // summaryHtml: 담당 업무만 최대 3줄
+            if (title === '담당 업무') {
+                const previewLines = contentLines.slice(0, 3);
+                const remaining = contentLines.length - 3;
+                let summarySectionHtml = `<div class="exp-section">
+                <span class="exp-section-title">${title}</span>
+                <ul class="exp-bullets">`;
+                previewLines.forEach(line => {
+                    const text = line.trim().startsWith('-') ? line.trim().substring(1).trim() : line.trim();
+                    if (text) summarySectionHtml += `<li>${text}</li>`;
+                });
+                if (remaining > 0) {
+                    summarySectionHtml += `<li class="exp-more">외 ${remaining}개 항목 →</li>`;
+                }
+                summarySectionHtml += `</ul></div>`;
+                summaryHtml += summarySectionHtml;
             }
-            fullHtml += sectionHtml;
         } else {
             const plainHtml = `<p class="exp-desc">${section.replace(/\n/g, '<br>')}</p>`;
             summaryHtml += plainHtml;

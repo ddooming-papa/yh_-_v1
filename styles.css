@@ -747,6 +747,54 @@ section {
     background: rgba(52, 152, 219, 0.08);
 }
 
+.exp-section {
+    margin-top: 1.5rem;
+}
+
+/* 카드 요약 "외 N개 항목" 스타일 */
+.timeline-content .exp-bullets li.exp-more {
+    color: var(--primary-color);
+    font-style: italic;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    cursor: pointer;
+    list-style: none;
+    padding-left: 0;
+}
+.timeline-content .exp-bullets li.exp-more::before {
+    content: '' !important;
+    display: none;
+}
+
+.exp-section-title {
+    display: inline-block;
+    background-color: #e3f2fd;
+    color: #1e88e5;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+}
+
+.exp-bullets {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.exp-bullets li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.exp-bullets li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #1e88e5;
+    font-weight: bold;
+}
+
 /* 프로젝트 섹션 */
 .projects {
     background: linear-gradient(135deg, #bbdefb 0%, #e3f2fd 100%);
