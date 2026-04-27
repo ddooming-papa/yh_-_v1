@@ -1,12 +1,5 @@
-// 전역 데이터 객체
-let db = window.portfolioData || {
-    profile: {},
-    about: {},
-    skills: [],
-    experience: [],
-    projects: [],
-    contact: {}
-};
+// 전역 데이터 객체 (DOMContentLoaded 시점에 data.js 로드 후 초기화)
+let db = {};
 
 // DOM 요소들
 const hamburger = document.getElementById('hamburger');
@@ -672,4 +665,14 @@ function deleteExperience(id) {
 }
 
 // 초기 로드
-document.addEventListener('DOMContentLoaded', initializeData);
+document.addEventListener('DOMContentLoaded', () => {
+    db = window.portfolioData || {
+        profile: {},
+        about: {},
+        skills: [],
+        experience: [],
+        projects: [],
+        contact: {}
+    };
+    initializeData();
+});
