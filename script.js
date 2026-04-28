@@ -691,6 +691,10 @@ function deleteExperience(id) {
     }
 }
 
+// 전역 함수 노출 (onclick에서 호출 가능하도록)
+window.filterProjects = function(company, btn) { filterProjects(company, btn); };
+window.openProjectModal = function(id) { openProjectModal(id); };
+
 // 초기 로드
 document.addEventListener('DOMContentLoaded', () => {
     db = window.portfolioData || {
