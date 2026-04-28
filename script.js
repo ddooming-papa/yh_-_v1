@@ -303,7 +303,8 @@ function openProjectModal(id) {
     document.getElementById('projectModalCompany').textContent = project.company + ' · ' + project.period;
     document.getElementById('projectModalWhat').innerHTML = project.what.map(w => `<li>${w}</li>`).join('');
     document.getElementById('projectModalResult').innerHTML = project.result.map(r => `<li>${r}</li>`).join('');
-    modal.style.display = 'flex';
+    modal.style.cssText = 'display:flex !important; opacity:1 !important; align-items:center; justify-content:center; animation:none !important;';
+    modal.querySelector('.modal-content').style.cssText = 'animation:none !important; opacity:1 !important; background:#fff; border:1px solid #e0e7ef;';
 }
 
 // --- 연락처 섹션 ---
