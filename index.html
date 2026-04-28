@@ -313,5 +313,13 @@
         </div>
     </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 프로젝트 모달 opacity fix
+    var style = document.createElement('style');
+    style.textContent = '#projectModal{animation:none!important;opacity:1!important;align-items:center;justify-content:center;}#projectModal .modal-content{animation:none!important;opacity:1!important;background:#fff!important;border:1px solid #e0e7ef!important;}';
+    document.head.appendChild(style);
+});
+</script>
 </body>
 </html>
