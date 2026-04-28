@@ -1410,6 +1410,21 @@ html {
     animation: slideIn 0.3s ease;
 }
 
+/* 프로젝트 모달 오버라이드 */
+#projectModal {
+    align-items: center;
+    justify-content: center;
+    animation: none;
+    opacity: 1;
+}
+
+#projectModal .modal-content {
+    background: #ffffff;
+    border: 1px solid #e0e7ef;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    animation: none;
+}
+
 /* 경력 모달: 밝은 배경 + 진한 텍스트로 가독성 개선 */
 #experienceModal .modal-content {
     background: #ffffff;
