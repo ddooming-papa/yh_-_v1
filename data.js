@@ -64,7 +64,7 @@ window.portfolioData = {
     {
       "id": 2,
       "title": "대리",
-      "company": "한국쌀마스타",
+      "company": "한국씰마스타",
       "date": "2016.10.13 ~ 2022.02.28",
       "description": "[담당 업무]\n- 사내 IT 인프라 전반 운영 및 관리\n- 서버·네트워크·보안·ERP 시스템 운영\n- IT 아웃소싱 운영 및 외부 보안 감사(Audit) 대응\n\n[핵심 수행 업무]\n- AD 기반 사용자 계정 및 GPO 권한 관리, Teams 화상회의 시스템 운영\n- SMB 기반 네트워크 파일 서버 구성 및 접근 권한 관리\n- AD, Exchange 서버 및 Windows(NT), Linux, IBM, Hyper-V 환경 서버 운영\n- 대용량 NAS 구성·운영 및 저사양 서버 고도화 작업 수행\n- ERP 시스템 구축·운영 계획 수립 및 서버 환경 구성\n- 본사 및 국내·해외 사업장 방화벽, VPN 구성 및 원격 접속 환경 운영\n- Fasoo DRM, Waterwall, MDM, AppCheck, ESET 등 보안 솔루션 운영\n- 삼성, AMAT, Lam Research 등 외부 보안 감사(Audit) 대응\n\n[주요 성과]\n- 사내 IT 인프라 전반을 단일 담당자로 운영하며 서버·네트워크·보안·업무 시스템의 안정적인 운영 체계 유지\n- ERP 시스템 구축·운영 및 AD·보안 솔루션 통합 관리를 통해 사용자 환경 변경 및 장애 대응에 대한 운영 기준 정립\n- 외부 보안 감사(Audit) 및 IT 아웃소싱 관리 경험을 통해 제조업 환경에서 요구되는 보안·내부 통제 관점을 실무적으로 확보"
     },
