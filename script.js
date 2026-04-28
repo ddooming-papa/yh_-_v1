@@ -253,30 +253,57 @@ function renderProjects() {
     const projectsGrid = document.getElementById('projectsGrid');
     if (!projectsGrid || !db.projects) return;
 
-    projectsGrid.innerHTML = '';
-    db.projects.forEach(project => {
-        const projectCard = document.createElement('div');
-        projectCard.className = 'project-card';
-        projectCard.onclick = () => openModal(project);
-        
-        projectCard.innerHTML = `
-            <div class="project-image">
-                <i class="${project.icon}"></i>
-            </div>
-            <div class="project-content">
-                <h3>${project.title}</h3>
-                <p>${project.description.substring(0, 100)}...</p>
-                <div class="project-tech">
-                    ${project.tech.map(tech => `<span>${tech}</span>`).join('')}
+    // 필터 탭 + 카드 그리드 렌더링
+    const companies = ['전체', ...new Set(db.projects.map(p => p.company))];
+    const companyCount = {};
+    db.projects.forEach(p => { companyCount[p.company] = (companyCount[p.company] || 0) + 1; });
+
+    projectsGrid.innerHTML = `
+        <div class="project-filter-tabs" id="projectFilterTabs">
+            ${companies.map((c, i) => `
+                <button class="pf-tab ${i === 0 ? 'active' : ''}" data-company="${c}" onclick="filterProjects('${c}', this)">
+                    ${c === '전체' ? '전체 ' + db.projects.length : c + ' ' + (companyCount[c] || 0)}
+                </button>
+            `).join('')}
+        </div>
+        <div class="project-cards-grid" id="projectCardsGrid">
+            ${db.projects.map(p => `
+                <div class="pj-card" data-company="${p.company}" onclick="openProjectModal(${p.id})">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                        <div class="pj-icon">${p.emoji || '📁'}</div>
+                        <span class="pj-company">${p.company}</span>
+                    </div>
+                    <div class="pj-title">${p.title}</div>
+                    <div class="pj-period">${p.period}</div>
+                    <div class="pj-summary">${p.summary}</div>
+                    <div class="pj-tags">
+                        ${p.tags.map(t => `<span class="pj-tag ${t.color || ''}">${t.label}</span>`).join('')}
+                    </div>
                 </div>
-                <div class="project-links">
-                    <a href="${project.demo}" class="btn btn-small" onclick="event.stopPropagation()" target="_blank">데모</a>
-                    <a href="${project.code}" class="btn btn-small" onclick="event.stopPropagation()" target="_blank">코드</a>
-                </div>
-            </div>
-        `;
-        projectsGrid.appendChild(projectCard);
+            `).join('')}
+        </div>
+    `;
+}
+
+function filterProjects(company, btn) {
+    document.querySelectorAll('.pf-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.pj-card').forEach(card => {
+        const show = company === '전체' || card.dataset.company === company;
+        card.style.display = show ? '' : 'none';
     });
+}
+
+function openProjectModal(id) {
+    const project = db.projects.find(p => p.id === id);
+    if (!project) return;
+    const modal = document.getElementById('projectModal');
+    if (!modal) return;
+    document.getElementById('projectModalTitle').textContent = project.title;
+    document.getElementById('projectModalCompany').textContent = project.company + ' · ' + project.period;
+    document.getElementById('projectModalWhat').innerHTML = project.what.map(w => `<li>${w}</li>`).join('');
+    document.getElementById('projectModalResult').innerHTML = project.result.map(r => `<li>${r}</li>`).join('');
+    modal.style.display = 'flex';
 }
 
 // --- 연락처 섹션 ---

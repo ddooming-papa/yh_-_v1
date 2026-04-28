@@ -178,23 +178,20 @@
     </footer>
 
     <!-- 프로젝트 모달 -->
-    <div id="projectModal" class="modal">
-        <div class="modal-content">
+    <div id="projectModal" class="modal" style="display:none;align-items:center;justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+        <div class="modal-content" style="max-width:520px;width:92%;max-height:85vh;overflow-y:auto;">
             <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle">프로젝트 제목</h2>
-                <span class="close" id="closeModal">&times;</span>
+                <div>
+                    <h2 class="modal-title" id="projectModalTitle">프로젝트 제목</h2>
+                    <p style="font-size:0.85rem;color:#888;margin-top:4px;" id="projectModalCompany"></p>
+                </div>
+                <span class="close" onclick="document.getElementById('projectModal').style.display='none'">&times;</span>
             </div>
             <div class="modal-body">
-                <div class="modal-image" id="modalImage">
-                    <i class="fas fa-project-diagram"></i>
-                </div>
-                <p class="modal-description" id="modalDescription">프로젝트 설명이 여기에 표시됩니다.</p>
-                <div class="modal-tech" id="modalTech">
-                    <!-- 기술 스택이 여기에 표시됩니다 -->
-                </div>
-                <div class="modal-links" id="modalLinks">
-                    <!-- 링크 버튼들이 여기에 표시됩니다 -->
-                </div>
+                <p style="font-size:0.8rem;font-weight:700;color:#1e88e5;margin-bottom:6px;">주요 내용</p>
+                <ul class="pj-modal-list" id="projectModalWhat"></ul>
+                <p style="font-size:0.8rem;font-weight:700;color:#1e88e5;margin:14px 0 6px;">핵심 성과</p>
+                <ul class="pj-modal-list" id="projectModalResult"></ul>
             </div>
         </div>
     </div>

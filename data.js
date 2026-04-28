@@ -79,30 +79,187 @@ window.portfolioData = {
   "projects": [
     {
       "id": 1,
-      "title": "이커머스 플랫폼",
-      "description": "React와 Node.js를 사용한 온라인 쇼핑몰 플랫폼입니다. 사용자 인증, 상품 관리, 결제 시스템, 주문 추적 등의 기능을 포함하고 있습니다. 반응형 디자인으로 모바일과 데스크톱에서 모두 최적화된 사용자 경험을 제공합니다.",
-      "tech": ["React", "Node.js", "MongoDB", "Express", "Stripe"],
-      "demo": "https://demo.example.com",
-      "code": "https://github.com/example/ecommerce",
-      "icon": "fas fa-shopping-cart"
+      "title": "KT 코넷망 라우터 대개체",
+      "company": "아이크래프트",
+      "period": "2014.08 ~ 2016.01",
+      "emoji": "🌐",
+      "summary": "Cisco → Juniper L3 백본 라우터 전환, 10개 국소 200Gbps 무중단 대개체",
+      "tags": [{"label": "Juniper", "color": "teal"}, {"label": "BGP/ISIS"}, {"label": "L3"}],
+      "what": [
+        "L3 라우터 벤더 변경 (Cisco → Juniper) 및 장비 교체 수행",
+        "ISIS/BGP/OSPF 기반 트래픽 우회 및 단계적 절체 수행",
+        "작업 계획서, Config 문서, 선번장 작성 및 협력사 공유",
+        "현장 회선 테스트 및 사전 컨피그 업로드 수행"
+      ],
+      "result": [
+        "10개 국소 대개체 작업 장애 없이 완료",
+        "업링크 트래픽 처리 용량 평균 200Gbps 수준으로 증설",
+        "Active/Standby 이중화 기반 서비스 영향 최소화",
+        "사전 Config 검증으로 장애 없이 트래픽 전환 완료"
+      ]
     },
     {
       "id": 2,
-      "title": "프로젝트 관리 도구",
-      "description": "팀 협업을 위한 프로젝트 관리 및 일정 추적 시스템입니다. 칸반 보드, 간트 차트, 실시간 채팅, 파일 공유 등의 기능을 제공합니다. 드래그 앤 드롭 인터페이스로 직관적인 작업 관리가 가능합니다.",
-      "tech": ["Vue.js", "Express", "PostgreSQL", "Socket.io", "Chart.js"],
-      "demo": "https://demo.example.com",
-      "code": "https://github.com/example/project-manager",
-      "icon": "fas fa-tasks"
+      "title": "KSM 그룹 전사 IT 인프라 구축",
+      "company": "한국씰마스타",
+      "period": "2016.12 ~ 2022.01",
+      "emoji": "🏢",
+      "summary": "전 계열사 서버·네트워크 구축, 물리 서버 30대 → 가상 서버 1대 통합, MES 120대 연동",
+      "tags": [{"label": "AD", "color": "blue"}, {"label": "Hyper-V"}, {"label": "MES"}],
+      "what": [
+        "전 계열사 IBM 메인 서버 신규 구축 및 AD 계정·그룹 정책 운영",
+        "신규 사업장 전산실 구축 (김포 본사, 서울 사무소)",
+        "MES 도입을 위한 서버·스토리지 인프라 구성",
+        "노후 물리 서버 가상화 전환 추진 및 AD·Exchange 하이브리드 업그레이드"
+      ],
+      "result": [
+        "물리 서버 30대 → 가상 서버 1대로 통합 구축",
+        "MES 도입으로 120대 공정 시스템 네트워크 연동",
+        "5년간 그룹 계열사 IT 인프라 안정적 운영 유지",
+        "전 계열사 AD 운영 정책 표준화 관리 체계 정립"
+      ]
     },
     {
       "id": 3,
-      "title": "데이터 시각화 대시보드",
-      "description": "실시간 데이터 분석 및 시각화를 위한 대시보드입니다. 다양한 차트와 그래프를 통해 데이터를 직관적으로 표현하며, 필터링과 드릴다운 기능을 제공합니다. API 연동을 통한 실시간 데이터 업데이트가 가능합니다.",
-      "tech": ["D3.js", "Python", "Flask", "SQLite", "Chart.js"],
-      "demo": "https://demo.example.com",
-      "code": "https://github.com/example/dashboard",
-      "icon": "fas fa-chart-line"
+      "title": "전사 보안 솔루션 도입 및 통합 운영",
+      "company": "한국씰마스타",
+      "period": "2016.12 ~ 2022.01",
+      "emoji": "🔒",
+      "summary": "1,000대 Endpoint DRM·DLP·EDR 통합 구축 및 3중 백업 구조 설계",
+      "tags": [{"label": "DRM", "color": "amber"}, {"label": "DLP", "color": "amber"}, {"label": "MDM"}],
+      "what": [
+        "Fasoo DRM 도입 및 문서 암호화 정책 수립·운영",
+        "Waterwall DLP 기반 반출 통제 정책 설계 및 관리",
+        "AppCheck 도입으로 전사 단말 랜섬웨어 실시간 보호 체계 구축",
+        "ShadowProtect·Carbonite·Acronis 기반 3중 백업 구조 설계 및 운영"
+      ],
+      "result": [
+        "전 계열사 1,000대 Endpoint 보안 체계 통합 구축 및 운영 표준화",
+        "백신·DRM·DLP 연계를 통한 데이터 유출 통제 체계 확립",
+        "랜섬웨어 실시간 탐지·차단 기반 위협 대응 체계 구축",
+        "퇴직자 보안 점검 프로세스 정립으로 내부 정보 유출 리스크 최소화"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "보안 침해 사고 대응",
+      "company": "동화기업",
+      "period": "2024.01 ~ 2024.03",
+      "emoji": "🚨",
+      "summary": "AD 마비 침해사고 자체 복구, AD 물리 이중화 전환 및 서버 접근제어 구축",
+      "tags": [{"label": "AD"}, {"label": "접근제어", "color": "red"}, {"label": "보안", "color": "red"}],
+      "what": [
+        "AD 정책 마비로 인한 전사 공정 중단 상황 자체 대응 및 서비스 복구",
+        "AD 가상 서버 → 물리 서버 기반 Active-Active sync 구성으로 전환",
+        "서버 접근제어 솔루션 신규 도입 및 비인가 접근 차단 체계 구축",
+        "해킹 경로 분석 및 재발 방지 운영 프로세스 개선"
+      ],
+      "result": [
+        "외부 공격자 요구 없이 내부 대응만으로 침해사고 완전 복구",
+        "AD 물리 이중화 전환으로 서비스 안정성 및 보안성 확보",
+        "RDP 및 서버 간 비인가 접근 경로 차단 체계 구축",
+        "재발 방지 중심 보안 운영 체계 수립"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "통합 모니터링 구축",
+      "company": "동화기업",
+      "period": "2023.01 ~ 2023.06",
+      "emoji": "📊",
+      "summary": "Zabbix·Grafana·CloudWatch 연동으로 IDC·멀티 클라우드 단일 대시보드 통합",
+      "tags": [{"label": "Zabbix", "color": "teal"}, {"label": "Grafana", "color": "teal"}, {"label": "CloudWatch"}],
+      "what": [
+        "Zabbix 서버 버전 업그레이드 (v4.4.5 → v6.0.4) 및 IDC 통합 관제 구성",
+        "Grafana와 Zabbix·CloudWatch 연동으로 통합 대시보드 구축",
+        "AWS CloudWatch·Azure를 Grafana와 연동하여 멀티 클라우드 통합 관제 구현",
+        "Teams·메일 알람 구성 및 노이즈 튜닝으로 필수 알람만 수신"
+      ],
+      "result": [
+        "IDC·네트워크·클라우드 분산 관제 환경을 단일 Grafana 대시보드로 통합",
+        "AWS·Azure 멀티 클라우드 전체 현황 즉시 확인 가능",
+        "알람 튜닝으로 노이즈 제거, 장애 초기 대응 속도 향상"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "AWS MGN DR 구성",
+      "company": "동화기업",
+      "period": "2022.03 ~ 2022.08",
+      "emoji": "☁️",
+      "summary": "IDC-AWS 하이브리드 DR 설계, 서버 6대 무중단 복제 및 절체 검증",
+      "tags": [{"label": "AWS MGN", "color": "blue"}, {"label": "VPN", "color": "blue"}, {"label": "EC2", "color": "blue"}],
+      "what": [
+        "IDC-AWS 하이브리드 구조 기반 DR 아키텍처 설계",
+        "AWS MGN을 활용한 온프레미스 서버 6대 복제 및 DR 환경 구성",
+        "DR 절체 테스트 시나리오 수립 및 검증 수행",
+        "Site-to-Site VPN 기반 IDC-AWS 간 네트워크 연결 구성"
+      ],
+      "result": [
+        "IDC-AWS 하이브리드 DR 환경 구성으로 비즈니스 연속성 확보",
+        "DR 절체 테스트 수행 및 복구 절차 표준화로 장애 대응 체계 수립",
+        "AWS MGN 활용으로 온프레미스 환경 무중단 복제 및 전환 완료"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "S4HANA 고도화 AWS 인프라 지원",
+      "company": "동화기업",
+      "period": "2022.03 ~ 재직중",
+      "emoji": "🗄️",
+      "summary": "SAP ERP 전환 AWS 인프라 지원, EC2 스냅샷 백업·복구 자동화",
+      "tags": [{"label": "EC2", "color": "blue"}, {"label": "RDS Aurora", "color": "blue"}, {"label": "SAP"}],
+      "what": [
+        "S4HANA 고도화 전환 기간 AWS 인프라 지원 및 안정화",
+        "테스트용 EC2 이미지 백업·복구 프로세스 수립 및 스냅샷 정책 자동화",
+        "RDS Aurora PostgreSQL 운영 및 성능 모니터링",
+        "테스트 환경 DB 복제 및 초기화 프로세스 운영"
+      ],
+      "result": [
+        "S4HANA 고도화 프로젝트 인프라 지원으로 ERP 전환 안정성 기여",
+        "EC2 스냅샷 기반 백업·복구 체계로 테스트 환경 신속 복원 가능",
+        "반복 테스트 환경 자동화로 테스트 사이클 단축 및 운영 효율화"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "ITSM AWS 인프라 아키텍처 구성",
+      "company": "동화기업",
+      "period": "2022.03 ~ 재직중",
+      "emoji": "⚙️",
+      "summary": "ECS·ALB·Aurora 기반 DEV/PRD 분리 구성, CodePipeline CI/CD 자동화",
+      "tags": [{"label": "ECS", "color": "blue"}, {"label": "CodePipeline", "color": "blue"}, {"label": "Docker"}],
+      "what": [
+        "ECS/EC2, ALB, Aurora PostgreSQL, S3, Amplify 활용 아키텍처 설계",
+        "DEV/PRD 환경 분리 구성 및 CodePipeline 기반 CI/CD 자동화",
+        "ECS EC2 및 Fargate 기반 컨테이너 운영 환경 구축",
+        "Docker 이미지 빌드·배포 프로세스 표준화"
+      ],
+      "result": [
+        "ITSM DEV/PRD 인프라 아키텍처 설계 및 구성 완료",
+        "CodePipeline 기반 CI/CD 자동화로 배포 프로세스 표준화 및 운영 효율화",
+        "ECS Fargate 도입으로 인프라 관리 부담 절감 및 컨테이너 환경 안정화"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "AWS Direct Connect 전환",
+      "company": "동화기업",
+      "period": "2022.03 ~ 재직중",
+      "emoji": "🔗",
+      "summary": "VPN → DX 무중단 전환, BGP 재구성 및 이중화 네트워크 구현",
+      "tags": [{"label": "Direct Connect", "color": "blue"}, {"label": "BGP"}, {"label": "VGW"}],
+      "what": [
+        "기존 Site-to-Site VPN에서 Direct Connect로 전환 아키텍처 설계",
+        "무중단 전환을 위한 이중화 전환 절차 수립",
+        "VGW·BGP 재구성 및 라우팅 테이블 전환",
+        "전환 후 네트워크 성능·안정성 테스트 및 Failover 검증"
+      ],
+      "result": [
+        "DX 전환으로 클라우드 네트워크 안정성 및 전용선 기반 대역폭 확보",
+        "BGP 재구성을 통한 라우팅 최적화 및 네트워크 이중화 구현",
+        "무중단 전환 절차 수립 및 수행으로 서비스 영향 없이 전환 완료"
+      ]
     }
   ],
   "contact": {
