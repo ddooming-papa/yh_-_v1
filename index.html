@@ -315,9 +315,13 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // 프로젝트 모달 opacity fix
     var style = document.createElement('style');
-    style.textContent = '#projectModal{animation:none!important;opacity:1!important;align-items:center;justify-content:center;}#projectModal .modal-content{animation:none!important;opacity:1!important;background:#fff!important;border:1px solid #e0e7ef!important;}';
+    style.textContent = [
+        '#projectModal{animation:none!important;opacity:1!important;align-items:center;justify-content:center;position:fixed!important;z-index:999999!important;top:0!important;left:0!important;width:100%!important;height:100%!important;background:rgba(0,0,0,0.8)!important;}',
+        '#projectModal .modal-content{animation:none!important;opacity:1!important;background:#fff!important;border:1px solid #e0e7ef!important;padding:2rem;border-radius:12px;max-width:520px;width:90%;max-height:85vh;overflow-y:auto;}',
+        '.projects{pointer-events:none!important;}',
+        '.projects .container,.project-filter-tabs,.pf-tab,.project-cards-grid,.pj-card,.pj-tag{pointer-events:auto!important;}'
+    ].join('');
     document.head.appendChild(style);
 });
 </script>
