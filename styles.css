@@ -816,6 +816,19 @@ section {
     display: block;
 }
 
+/* 프로젝트 섹션 배경이 카드 클릭을 막지 않도록 */
+.projects {
+    pointer-events: none !important;
+}
+.projects .container,
+.project-filter-tabs,
+.pf-tab,
+.project-cards-grid,
+.pj-card,
+.pj-tag {
+    pointer-events: auto !important;
+}
+
 /* 프로젝트 필터 탭 */
 .project-filter-tabs {
     display: flex;
