@@ -347,9 +347,8 @@ function openProjectModal(id) {
         const lb = document.createElement('div');
         lb.id = 'imageLightbox';
         lb.style.cssText = 'display:none;position:fixed;inset:0;z-index:9999999;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;padding:2rem;cursor:zoom-out;';
-        lb.innerHTML = '<img id="lightboxImg" style="max-width:90vw;max-height:90vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,0.5);object-fit:contain;" />' +
-            '<div id="lightboxCaption" style="position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);color:#fff;font-size:0.9rem;opacity:0.8;"></div>' +
-            '<button onclick="document.getElementById('imageLightbox').style.display='none'" style="position:fixed;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:1.5rem;width:40px;height:40px;border-radius:50%;cursor:pointer;line-height:1;">✕</button>';
+        lb.innerHTML = '<img id="lightboxImg" style="max-width:90vw;max-height:90vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,0.5);object-fit:contain;" /><div id="lightboxCaption" style="position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);color:#fff;font-size:0.9rem;opacity:0.8;"></div><button id="lightboxClose" style="position:fixed;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:1.5rem;width:40px;height:40px;border-radius:50%;cursor:pointer;line-height:1;">&#x2715;</button>';
+        document.getElementById('lightboxClose').addEventListener('click', function() { document.getElementById('imageLightbox').style.display = 'none'; });
         lb.onclick = function(e) { if(e.target === lb) lb.style.display = 'none'; };
         document.body.appendChild(lb);
         // ESC 키로 닫기
