@@ -331,12 +331,32 @@ function openProjectModal(id) {
         `;
     }
 
-    // 이미지 (있는 경우 하단에 표시)
+    // 이미지 (있는 경우 하단에 표시) - 클릭 시 확대
     const imageHtml = project.image ? `
         <div style="margin-top:1.5rem;border-top:1px solid #e8f0fb;padding-top:1.2rem;">
-            <div style="font-size:0.78rem;font-weight:700;color:#1e88e5;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.8rem;">요약 다이어그램</div>
-            <img src="${project.image}" alt="${project.title}" style="width:100%;border-radius:8px;border:1px solid #e8f0fb;" />
+            <div style="font-size:0.78rem;font-weight:700;color:#1e88e5;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.8rem;">요약 다이어그램 <span style="font-weight:400;color:#aaa;font-size:0.72rem;">(클릭하면 확대)</span></div>
+            <img src="${project.image}" alt="${project.title}"
+                style="width:100%;border-radius:8px;border:1px solid #e8f0fb;cursor:zoom-in;transition:opacity 0.15s;"
+                onmouseover="this.style.opacity='0.85'"
+                onmouseout="this.style.opacity='1'"
+                onclick="openImageLightbox(this.src, '${project.title}')" />
         </div>` : '';
+
+    // 라이트박스가 없으면 생성
+    if (!document.getElementById('imageLightbox')) {
+        const lb = document.createElement('div');
+        lb.id = 'imageLightbox';
+        lb.style.cssText = 'display:none;position:fixed;inset:0;z-index:9999999;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;padding:2rem;cursor:zoom-out;';
+        lb.innerHTML = '<img id="lightboxImg" style="max-width:90vw;max-height:90vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,0.5);object-fit:contain;" />' +
+            '<div id="lightboxCaption" style="position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);color:#fff;font-size:0.9rem;opacity:0.8;"></div>' +
+            '<button onclick="document.getElementById('imageLightbox').style.display='none'" style="position:fixed;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:1.5rem;width:40px;height:40px;border-radius:50%;cursor:pointer;line-height:1;">✕</button>';
+        lb.onclick = function(e) { if(e.target === lb) lb.style.display = 'none'; };
+        document.body.appendChild(lb);
+        // ESC 키로 닫기
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') document.getElementById('imageLightbox').style.display = 'none';
+        });
+    }
 
     document.getElementById('projectModalWhat').innerHTML = roleHtml + detailHtml + imageHtml;
     document.getElementById('projectModalResult').innerHTML = '';
@@ -730,6 +750,15 @@ function deleteExperience(id) {
         renderAdminExperienceList();
         downloadDataJs();
     }
+}
+
+// 이미지 라이트박스 열기
+function openImageLightbox(src, title) {
+    const lb = document.getElementById('imageLightbox');
+    if (!lb) return;
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxCaption').textContent = title;
+    lb.style.display = 'flex';
 }
 
 // 초기 로드
