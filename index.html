@@ -209,8 +209,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script src="data.js"></script>
-    <script src="script.js"></script>
+    <script src="data.js?v=202604290419"></script>
+    <script src="script.js?v=202604290419"></script>
 
     <!-- 관리자 폼 -->
     <div class="admin-form-container" id="adminFormContainer" style="display: none;">
@@ -323,19 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
     ].join('');
     document.head.appendChild(style);
 
-    // data.js + script.js 캐시 버스팅해서 새로 로드
-    var ts = Date.now();
-    // 기존 스크립트 제거
-    document.querySelectorAll('script[src*="data.js"], script[src*="script.js"]').forEach(function(s) { s.remove(); });
-    // data.js 먼저 로드 후 script.js 로드
-    var dataScript = document.createElement('script');
-    dataScript.src = 'data.js?v=' + ts;
-    dataScript.onload = function() {
-        var mainScript = document.createElement('script');
-        mainScript.src = 'script.js?v=' + ts;
-        document.body.appendChild(mainScript);
-    };
-    document.body.appendChild(dataScript);
+    // 캐시 버스팅은 script 태그 src에 직접 적용됨
 });
 </script>
 </body>
