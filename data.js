@@ -144,7 +144,8 @@ window.portfolioData = {
         "10개 국소 대개체 작업 장애 없이 완료",
         "업링크 트래픽 처리 용량 평균 200Gbps 증설",
         "Active/Standby 이중화 기반 서비스 영향 최소화"
-      ]
+      ],
+      "image": "proj_01_kt_router.png"
     },
     {
       "id": 2,
@@ -200,7 +201,8 @@ window.portfolioData = {
         "물리 서버 30대 → 가상 서버 1대로 통합",
         "MES 도입으로 120대 공정 시스템 네트워크 연동",
         "5년간 안정적 운영 유지"
-      ]
+      ],
+      "image": "proj_02_ksm_infra.png"
     },
     {
       "id": 3,
@@ -260,7 +262,8 @@ window.portfolioData = {
         "1,000대 Endpoint 보안 체계 통합 구축",
         "데이터 유출 통제 체계 확립",
         "퇴직자 보안 점검 프로세스 정립"
-      ]
+      ],
+      "image": "proj_03_security.png"
     },
     {
       "id": 4,
@@ -328,7 +331,8 @@ window.portfolioData = {
         "내부 대응만으로 침해사고 완전 복구",
         "AD 물리 이중화로 안정성 및 보안성 확보",
         "RDP 비인가 접근 경로 차단"
-      ]
+      ],
+      "image": "proj_04_breach.png"
     },
     {
       "id": 5,
@@ -392,7 +396,8 @@ window.portfolioData = {
       "result": [
         "IDC·클라우드 단일 대시보드 통합",
         "알람 튜닝으로 장애 초기 대응 속도 향상"
-      ]
+      ],
+      "image": "proj_05_monitoring.png"
     },
     {
       "id": 6,
@@ -451,7 +456,8 @@ window.portfolioData = {
         "비즈니스 연속성 확보",
         "DR 절체 테스트 수행 및 복구 절차 표준화",
         "무중단 복제 및 전환 완료"
-      ]
+      ],
+      "image": "proj_06_aws_mgn.png"
     },
     {
       "id": 7,
@@ -514,7 +520,8 @@ window.portfolioData = {
         "ERP 전환 안정성 기여",
         "테스트 환경 신속 복원",
         "반복 테스트 사이클 단축"
-      ]
+      ],
+      "image": "proj_07_s4hana.png"
     },
     {
       "id": 8,
@@ -576,7 +583,8 @@ window.portfolioData = {
       "result": [
         "CI/CD 자동화로 배포 프로세스 표준화",
         "ECS Fargate 도입으로 인프라 관리 부담 절감"
-      ]
+      ],
+      "image": "proj_08_itsm.png"
     },
     {
       "id": 9,
@@ -638,7 +646,8 @@ window.portfolioData = {
         "전용선 기반 네트워크 안정성 확보",
         "라우팅 최적화 및 이중화 구현",
         "서비스 영향 없이 전환 완료"
-      ]
+      ],
+      "image": "proj_09_dx.png"
     }
   ],
   "contact": {

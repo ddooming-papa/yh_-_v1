@@ -331,7 +331,14 @@ function openProjectModal(id) {
         `;
     }
 
-    document.getElementById('projectModalWhat').innerHTML = roleHtml + detailHtml;
+    // 이미지 (있는 경우 하단에 표시)
+    const imageHtml = project.image ? `
+        <div style="margin-top:1.5rem;border-top:1px solid #e8f0fb;padding-top:1.2rem;">
+            <div style="font-size:0.78rem;font-weight:700;color:#1e88e5;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.8rem;">요약 다이어그램</div>
+            <img src="${project.image}" alt="${project.title}" style="width:100%;border-radius:8px;border:1px solid #e8f0fb;" />
+        </div>` : '';
+
+    document.getElementById('projectModalWhat').innerHTML = roleHtml + detailHtml + imageHtml;
     document.getElementById('projectModalResult').innerHTML = '';
 
     modal.style.cssText = 'display:flex !important; opacity:1 !important; align-items:flex-start; justify-content:center; animation:none !important; position:fixed !important; z-index:999999 !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; background-color:rgba(0,0,0,0.7) !important; padding-top:5vh; overflow-y:auto;';
