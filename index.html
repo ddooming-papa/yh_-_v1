@@ -313,14 +313,29 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // CSS fix
     var style = document.createElement('style');
     style.textContent = [
-        '#projectModal{animation:none!important;opacity:1!important;align-items:center;justify-content:center;position:fixed!important;z-index:999999!important;top:0!important;left:0!important;width:100%!important;height:100%!important;background:rgba(0,0,0,0.8)!important;}',
-        '#projectModal .modal-content{animation:none!important;opacity:1!important;background:#fff!important;border:1px solid #e0e7ef!important;padding:2rem;border-radius:12px;max-width:520px;width:90%;max-height:85vh;overflow-y:auto;}',
+        '#projectModal{animation:none!important;opacity:1!important;align-items:flex-start!important;justify-content:center!important;position:fixed!important;z-index:999999!important;top:0!important;left:0!important;width:100%!important;height:100%!important;background:rgba(0,0,0,0.75)!important;padding-top:5vh!important;overflow-y:auto!important;}',
+        '#projectModal .modal-content{animation:none!important;opacity:1!important;background:#fff!important;border:1px solid #e0e7ef!important;padding:1.8rem!important;border-radius:14px!important;max-width:580px!important;width:92%!important;margin-bottom:5vh!important;}',
         '.projects{pointer-events:none!important;}',
         '.projects .container,.project-filter-tabs,.pf-tab,.project-cards-grid,.pj-card,.pj-tag{pointer-events:auto!important;}'
     ].join('');
     document.head.appendChild(style);
+
+    // data.js + script.js 캐시 버스팅해서 새로 로드
+    var ts = Date.now();
+    // 기존 스크립트 제거
+    document.querySelectorAll('script[src*="data.js"], script[src*="script.js"]').forEach(function(s) { s.remove(); });
+    // data.js 먼저 로드 후 script.js 로드
+    var dataScript = document.createElement('script');
+    dataScript.src = 'data.js?v=' + ts;
+    dataScript.onload = function() {
+        var mainScript = document.createElement('script');
+        mainScript.src = 'script.js?v=' + ts;
+        document.body.appendChild(mainScript);
+    };
+    document.body.appendChild(dataScript);
 });
 </script>
 </body>
