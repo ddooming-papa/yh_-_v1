@@ -334,8 +334,10 @@ function openProjectModal(id) {
     document.getElementById('projectModalWhat').innerHTML = roleHtml + detailHtml;
     document.getElementById('projectModalResult').innerHTML = '';
 
-    modal.style.cssText = 'display:flex !important; opacity:1 !important; align-items:center; justify-content:center; animation:none !important; position:fixed !important; z-index:999999 !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; background-color:rgba(0,0,0,0.7) !important;';
-    modal.querySelector('.modal-content').style.cssText = 'animation:none !important; opacity:1 !important; background:#fff !important; border:1px solid #e0e7ef !important; padding:1.8rem; border-radius:14px; max-width:580px; width:92%; max-height:85vh; overflow-y:auto;';
+    modal.style.cssText = 'display:flex !important; opacity:1 !important; align-items:flex-start; justify-content:center; animation:none !important; position:fixed !important; z-index:999999 !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; background-color:rgba(0,0,0,0.7) !important; padding-top:5vh; overflow-y:auto;';
+    const mc = modal.querySelector('.modal-content');
+    mc.style.cssText = 'animation:none !important; opacity:1 !important; background:#fff !important; border:1px solid #e0e7ef !important; padding:1.8rem; border-radius:14px; max-width:580px; width:92%; margin-bottom:5vh;';
+    mc.scrollTop = 0;
 }
 
 // --- 연락처 섹션 ---
