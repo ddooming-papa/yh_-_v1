@@ -725,16 +725,21 @@ function deleteExperience(id) {
 
 // 초기 로드
 document.addEventListener('DOMContentLoaded', () => {
-    db = window.portfolioData || {
-        profile: {},
-        about: {},
-        skills: [],
-        experience: [],
-        projects: [],
-        contact: {}
-    };
-    initializeData();
-    // 전역 함수 노출 (onclick 이벤트에서 호출 가능하도록)
-    window.filterProjects = filterProjects;
-    window.openProjectModal = openProjectModal;
+    // data.js가 로드되지 않았을 경우 재시도
+    function tryInit(retries) {
+        if (window.portfolioData) {
+            db = window.portfolioData;
+            initializeData();
+            window.filterProjects = filterProjects;
+            window.openProjectModal = openProjectModal;
+        } else if (retries > 0) {
+            setTimeout(() => tryInit(retries - 1), 200);
+        } else {
+            db = { profile: {}, about: {}, skills: [], experience: [], projects: [], contact: {} };
+            initializeData();
+            window.filterProjects = filterProjects;
+            window.openProjectModal = openProjectModal;
+        }
+    }
+    tryInit(10);
 });
