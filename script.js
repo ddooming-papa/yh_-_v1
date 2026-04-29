@@ -299,12 +299,43 @@ function openProjectModal(id) {
     if (!project) return;
     const modal = document.getElementById('projectModal');
     if (!modal) return;
-    document.getElementById('projectModalTitle').textContent = project.title;
+    document.getElementById('projectModalTitle').textContent = project.emoji + ' ' + project.title;
     document.getElementById('projectModalCompany').textContent = project.company + ' · ' + project.period;
-    document.getElementById('projectModalWhat').innerHTML = project.what.map(w => `<li>${w}</li>`).join('');
-    document.getElementById('projectModalResult').innerHTML = project.result.map(r => `<li>${r}</li>`).join('');
-    modal.style.cssText = 'display:flex !important; opacity:1 !important; align-items:center; justify-content:center; animation:none !important; position:fixed !important; z-index:999999 !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; background-color:rgba(0,0,0,0.8) !important;';
-    modal.querySelector('.modal-content').style.cssText = 'animation:none !important; opacity:1 !important; background:#fff !important; border:1px solid #e0e7ef !important; padding:2rem; border-radius:12px; max-width:520px; width:90%; max-height:85vh; overflow-y:auto;';
+
+    // 역할 배지
+    const roleHtml = project.role ? `<div style="display:inline-block;background:#eef4ff;color:#1e5fa8;border:1px solid #c5d9f7;border-radius:999px;padding:3px 12px;font-size:0.8rem;margin-bottom:1rem;">${project.role}</div>` : '';
+
+    // 상세 섹션별 렌더링
+    let detailHtml = '';
+    if (project.details && project.details.length > 0) {
+        detailHtml = project.details.map(d => `
+            <div style="margin-bottom:1.2rem;">
+                <div style="font-size:0.78rem;font-weight:700;color:#1e88e5;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;padding-bottom:4px;border-bottom:1.5px solid #e3f0fd;">
+                    ${d.section}
+                </div>
+                <ul class="pj-modal-list">
+                    ${d.items.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            </div>
+        `).join('');
+    } else {
+        detailHtml = `
+            <div style="margin-bottom:1rem;">
+                <div style="font-size:0.78rem;font-weight:700;color:#1e88e5;margin-bottom:0.5rem;">주요 내용</div>
+                <ul class="pj-modal-list">${project.what.map(w => `<li>${w}</li>`).join('')}</ul>
+            </div>
+            <div>
+                <div style="font-size:0.78rem;font-weight:700;color:#1e88e5;margin-bottom:0.5rem;">핵심 성과</div>
+                <ul class="pj-modal-list">${project.result.map(r => `<li>${r}</li>`).join('')}</ul>
+            </div>
+        `;
+    }
+
+    document.getElementById('projectModalWhat').innerHTML = roleHtml + detailHtml;
+    document.getElementById('projectModalResult').innerHTML = '';
+
+    modal.style.cssText = 'display:flex !important; opacity:1 !important; align-items:center; justify-content:center; animation:none !important; position:fixed !important; z-index:999999 !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; background-color:rgba(0,0,0,0.7) !important;';
+    modal.querySelector('.modal-content').style.cssText = 'animation:none !important; opacity:1 !important; background:#fff !important; border:1px solid #e0e7ef !important; padding:1.8rem; border-radius:14px; max-width:580px; width:92%; max-height:85vh; overflow-y:auto;';
 }
 
 // --- 연락처 섹션 ---
