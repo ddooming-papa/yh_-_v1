@@ -319,11 +319,32 @@ document.addEventListener('DOMContentLoaded', function() {
         '#projectModal{animation:none!important;opacity:1!important;align-items:flex-start!important;justify-content:center!important;position:fixed!important;z-index:999999!important;top:0!important;left:0!important;width:100%!important;height:100%!important;background:rgba(0,0,0,0.75)!important;padding-top:5vh!important;overflow-y:auto!important;}',
         '#projectModal .modal-content{animation:none!important;opacity:1!important;background:#fff!important;border:1px solid #e0e7ef!important;padding:1.8rem!important;border-radius:14px!important;max-width:580px!important;width:92%!important;margin-bottom:5vh!important;}',
         '.projects{pointer-events:none!important;}',
-        '.projects .container,.project-filter-tabs,.pf-tab,.project-cards-grid,.pj-card,.pj-tag{pointer-events:auto!important;}'
+        '.projects *{pointer-events:auto!important;}',
+        '.pj-card{cursor:pointer!important;position:relative!important;z-index:2!important;}'
     ].join('');
     document.head.appendChild(style);
 
     // 캐시 버스팅은 script 태그 src에 직접 적용됨
+
+    // 라이트박스 기능 인라인 정의
+    window.openImageLightbox = function(src, title) {
+        var lb = document.getElementById('imageLightbox');
+        if (!lb) {
+            lb = document.createElement('div');
+            lb.id = 'imageLightbox';
+            lb.style.cssText = 'display:none;position:fixed;inset:0;z-index:9999999;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;padding:2rem;flex-direction:column;gap:1rem;';
+            lb.innerHTML = '<img id="lightboxImg" style="max-width:90vw;max-height:85vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,0.5);object-fit:contain;cursor:zoom-out;" />'
+                + '<div id="lightboxCaption" style="color:#fff;font-size:0.9rem;opacity:0.8;"></div>'
+                + '<button id="lightboxClose" style="position:fixed;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:1.5rem;width:44px;height:44px;border-radius:50%;cursor:pointer;line-height:1;">&#x2715;</button>';
+            document.body.appendChild(lb);
+            lb.addEventListener('click', function(e) { if (e.target === lb || e.target.id === 'lightboxImg') lb.style.display = 'none'; });
+            document.getElementById('lightboxClose').addEventListener('click', function() { lb.style.display = 'none'; });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') lb.style.display = 'none'; });
+        }
+        document.getElementById('lightboxImg').src = src;
+        document.getElementById('lightboxCaption').textContent = title || '';
+        lb.style.display = 'flex';
+    };
 });
 </script>
 </body>
