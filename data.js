@@ -4,7 +4,7 @@ window.portfolioData = {
     "title": "YH’s Experience Lab",
     "description": "하이브리드 인프라·클라우드 전문가, 조영현입니다.<br>온프레미스(HCI/VMware)부터 AWS·Azure·M365까지,<br>다양한 영역을 안정적으로 운영해온 경험을 갖추고 있습니다.",
     "icon": "fas fa-user",
-    "imageUrl": "profile.jpg"
+    "imageUrl": "./profile.jpg"
   },
   "about": {
     "paragraph1": "\"불가능이란 노력하지 않는 자들의 변명이다\"\n꾸준한 노력이 곧 성장이라 믿습니다.\n클라우드와 온프레미스를 아우르는 경험을 기반으로 안정적이면서도 혁신적인 IT 인프라를 만들어 가겠습니다.",
